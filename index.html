@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- External CSS -->
-  <link rel="stylesheet" href="css/style.css?v=4">
+  <link rel="stylesheet" href="css/style.css?v=7">
 </head>
 <body>
 
@@ -22,22 +22,15 @@
       <a href="#hero" class="nav-brand skeleton skeleton-text" id="nav-brand"></a>
 
       <nav id="nav-links" class="nav-links">
-        <a href="#skills" class="nav-link skeleton skeleton-text" id="nav-skills"></a>
+        <a href="#hero" class="nav-link skeleton skeleton-text" id="nav-home"></a>
         <a href="#projects" class="nav-link skeleton skeleton-text" id="nav-projects"></a>
+        <a href="books.html" class="nav-link skeleton skeleton-text" id="nav-books"></a>
+        <a href="#skills" class="nav-link skeleton skeleton-text" id="nav-skills"></a>
+        <a href="#testimonials" class="nav-link skeleton skeleton-text" id="nav-testimonials"></a>
         <a href="#contact" class="nav-link skeleton skeleton-text" id="nav-contact"></a>
       </nav>
 
       <div class="nav-controls">
-        <!-- Language Switcher Button -->
-        <button id="lang-btn" class="control-btn lang-btn" onclick="window.switchLanguage()" aria-label="Switch Language" title="Switch Language">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="2" y1="12" x2="22" y2="12"></line>
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-          </svg>
-          <span id="lang-btn-text" class="skeleton skeleton-text"></span>
-        </button>
-
         <!-- Theme Toggle Button -->
         <button id="theme-toggle-btn" class="control-btn theme-toggle-btn" onclick="window.toggleTheme()" aria-label="Switch Theme" title="Switch Theme">
           <svg class="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -55,6 +48,22 @@
             <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
           </svg>
         </button>
+
+        <!-- Language Dropdown -->
+        <div class="lang-dropdown" id="lang-dropdown">
+          <button id="lang-dropdown-btn" class="control-btn lang-dropdown-btn" aria-haspopup="true" aria-expanded="false" aria-label="Select Language" title="Select Language">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+            <span id="current-lang-text" class="skeleton skeleton-text"></span>
+            <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
+          </button>
+          <div class="lang-dropdown-menu" id="lang-dropdown-menu" role="menu"></div>
+        </div>
 
         <!-- Mobile Menu Toggle Button -->
         <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
@@ -158,12 +167,33 @@
         <div class="projects-wrapper" id="projects-wrapper">
           <div class="skeleton-card skeleton"></div>
           <div class="skeleton-card skeleton"></div>
+          <div class="skeleton-card skeleton"></div>
+        </div>
+
+        <div class="projects-cta">
+          <a href="projects.html" class="btn btn-outline skeleton skeleton-btn" id="projects-view-all"></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section section-alt">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title skeleton skeleton-title" id="testimonials-title"></h2>
+          <p class="section-desc skeleton skeleton-desc" id="testimonials-desc"></p>
+        </div>
+
+        <div class="testimonials-grid" id="testimonials-wrapper">
+          <div class="skeleton-card skeleton"></div>
+          <div class="skeleton-card skeleton"></div>
+          <div class="skeleton-card skeleton"></div>
         </div>
       </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="section section-alt">
+    <section id="contact" class="section">
       <div class="container">
         <div class="contact-card">
           <div class="section-header">
@@ -218,7 +248,7 @@
   </footer>
 
   <!-- Scripts: Data Fallback + Template Engine -->
-  <script src="js/i18n-data.js?v=4"></script>
-  <script src="js/main.js?v=4" defer></script>
+  <script src="js/i18n-data.js?v=7"></script>
+  <script src="js/main.js?v=7" defer></script>
 </body>
 </html>

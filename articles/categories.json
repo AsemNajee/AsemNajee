@@ -1,0 +1,112 @@
+{
+  "categories": [
+    {
+      "folder": "folder1",
+      "title": {
+        "ar": "هندسة الأنظمة الخلفية والـ APIs",
+        "en": "Backend & API Engineering"
+      },
+      "description": {
+        "ar": "مقالات متقدمة في معمارية الأنظمة الخلفية، بناء الـ REST APIs، وقواعد البيانات.",
+        "en": "In-depth articles on backend architecture, scalable APIs, and database engineering."
+      },
+      "color": "#3b82f6",
+      "icon": "database",
+      "cover": "",
+      "articles": [
+        {
+          "file": "spring-boot-architecture.md",
+          "slug": "spring-boot-architecture",
+          "title": {
+            "ar": "دليل بناء معمارية REST APIs متكاملة باستخدام Spring Boot",
+            "en": "Building Scalable REST APIs with Spring Boot"
+          },
+          "description": {
+            "ar": "شرح معمارية الطبقات (Layered Architecture)، الـ DTOs، والتعامل الاحترافي مع الاستثناءات.",
+            "en": "A practical guide to layered architecture, DTOs, and global exception handling."
+          },
+          "date": "2025-06-15",
+          "readTime": {
+            "ar": "7 دقائق قراءة",
+            "en": "7 min read"
+          },
+          "cover": "",
+          "tags": ["Java", "Spring Boot", "Backend", "REST API"]
+        },
+        {
+          "file": "database-indexing-strategies.md",
+          "slug": "database-indexing-strategies",
+          "title": {
+            "ar": "استراتيجيات الفهرسة (Indexing) المتقدمة في قواعد البيانات",
+            "en": "Advanced Database Indexing Strategies for Performance"
+          },
+          "description": {
+            "ar": "كيفية تسريع استعلامات SQL المعقدة وتجنب أخطاء الفهرسة الشائعة في بيئات الإنتاج.",
+            "en": "How to optimize complex SQL queries and avoid common indexing pitfalls in production."
+          },
+          "date": "2025-05-28",
+          "readTime": {
+            "ar": "5 دقائق قراءة",
+            "en": "5 min read"
+          },
+          "cover": "",
+          "tags": ["MySQL", "Database", "Performance", "SQL"]
+        }
+      ]
+    },
+    {
+      "folder": "folder2",
+      "title": {
+        "ar": "تطوير تطبيقات الموبايل",
+        "en": "Mobile App Development"
+      },
+      "description": {
+        "ar": "شروحات وخبرات عملية في بناء وتطوير تطبيقات الهواتف الذكية باستخدام Flutter و Dart.",
+        "en": "Practical tutorials and insights into mobile application development with Flutter & Dart."
+      },
+      "color": "#06b6d4",
+      "icon": "smartphone",
+      "cover": "",
+      "articles": [
+        {
+          "file": "flutter-state-management.md",
+          "slug": "flutter-state-management",
+          "title": {
+            "ar": "مقارنة شاملة لأنماط إدارة الحالة (State Management) في Flutter",
+            "en": "State Management Patterns in Flutter: A Deep Dive"
+          },
+          "description": {
+            "ar": "تحليل عملي لاختيار النمط الأنسب لمشروعك بين BLoC و Provider و Riverpod.",
+            "en": "Comprehensive evaluation to help you pick the right state management approach."
+          },
+          "date": "2025-05-20",
+          "readTime": {
+            "ar": "9 دقائق قراءة",
+            "en": "9 min read"
+          },
+          "cover": "",
+          "tags": ["Flutter", "Dart", "State Management", "BLoC"]
+        },
+        {
+          "file": "clean-code-dart.md",
+          "slug": "clean-code-dart",
+          "title": {
+            "ar": "مبادئ الكود النظيف وأفضل الممارسات في لغة Dart",
+            "en": "Clean Code Principles & Best Practices in Dart"
+          },
+          "description": {
+            "ar": "قواعد كتابة كود قابل للقراءة والصيانة وإعادة الاستخدام في تطبيقات Flutter.",
+            "en": "Guidelines for writing maintainable, readable, and reusable code in Flutter projects."
+          },
+          "date": "2025-04-12",
+          "readTime": {
+            "ar": "6 دقائق قراءة",
+            "en": "6 min read"
+          },
+          "cover": "",
+          "tags": ["Dart", "Clean Code", "Best Practices"]
+        }
+      ]
+    }
+  ]
+}

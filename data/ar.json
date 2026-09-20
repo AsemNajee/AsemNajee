@@ -5,8 +5,11 @@
   },
   "nav": {
     "brand": "عاصم",
+    "home": "الرئيسية",
     "skills": "المهارات",
     "projects": "المشاريع",
+    "books": "الكتب",
+    "testimonials": "التوصيات",
     "contact": "تواصل معي"
   },
   "hero": {
@@ -63,11 +66,15 @@
     "title": "المشاريع المميزة",
     "description": "استعراض لأبرز المشاريع التي قمت بتطويرها في مجالات الويب، تطبيقات الموبايل والأنظمة الخلفية.",
     "viewGithub": "عرض على GitHub",
+    "liveDemo": "معاينة مباشرة",
+    "viewAll": "عرض جميع المشاريع",
+    "allCategories": "جميع المشاريع",
     "items": [
       {
         "id": "student-api",
         "title": "Student Management API",
         "description": "واجهة برمجة تطبيقات REST شاملة لإدارة الطلاب والمواد والمعلمين. مبنية باستخدام Spring Boot وفق معمارية MVC مع دعم كامل لعمليات CRUD والتحقق من صحة البيانات.",
+        "category": "الأنظمة الخلفية والـ APIs",
         "tags": ["Java", "Spring Boot", "MySQL", "MVC"],
         "github": "https://github.com/Asemnajee/student-management-api",
         "icon": "code",
@@ -77,6 +84,7 @@
         "id": "flutter-shop",
         "title": "تطبيق متجر إلكتروني (Flutter)",
         "description": "تطبيق متجر إلكتروني متكامل للهواتف الذكية مع ميزات تصفح المنتجات، إدارة السلة والمفضلة، وحسابات المستخدمين وفق أحدث معايير فلاتر.",
+        "category": "تطبيقات الموبايل",
         "tags": ["Dart", "Flutter", "إدارة الحالة", "تجارة إلكترونية"],
         "github": "https://github.com/Asemnajee/flutter-shopping-application",
         "icon": "smartphone",
@@ -86,6 +94,7 @@
         "id": "javabase-orm",
         "title": "مكتبة JavaBase ORM",
         "description": "مكتبة ORM مخصصة لتطبيقات جافا تسهل التعامل مع قواعد بيانات MySQL و SQLite، مستوحاة من Eloquent في Laravel وتدعم التهجير (Migrations) وإدارة النماذج.",
+        "category": "مكتبات وأدوات",
         "tags": ["Java", "ORM", "MySQL", "SQLite", "قواعد بيانات"],
         "github": "https://github.com/AsemNajee/JavaBase",
         "icon": "database",
@@ -95,12 +104,88 @@
         "id": "ftm-website",
         "title": "موقع معهد تقنيات المستقبل (FTM)",
         "description": "موقع تعريفي حديث لمعهد تقنيات المستقبل مبني باستخدام Next.js و React لعرض برامج المعهد وتسهيل التواصل بتصميم متجاوب بالكامل.",
+        "category": "تطبيقات الويب",
         "tags": ["JavaScript", "Next.js", "React", "تصميم متجاوب"],
         "github": "https://github.com/AsemNajee/FTM",
+        "liveUrl": "https://ftm-yemen.com",
         "icon": "terminal",
+        "image": ""
+      },
+      {
+        "id": "task-manager-cli",
+        "title": "أداة Task Manager CLI",
+        "description": "أداة سطر أوامر تفاعلية وخفيفة الوزن لإدارة المهام والمشاريع مع دعم تصدير التقارير والتخزين المحلي السريع.",
+        "category": "مكتبات وأدوات",
+        "tags": ["Rust", "CLI", "أدوات المطورين"],
+        "github": "https://github.com/Asemnajee",
+        "icon": "terminal",
+        "image": ""
+      },
+      {
+        "id": "finance-tracker-api",
+        "title": "نظام Personal Finance API",
+        "description": "واجهة برمجية RESTful لتتبع الميزانية الشخصية والمصروفات الشهرية مع توثيق تفاعلي عبر Swagger ومصادقة JWT.",
+        "category": "الأنظمة الخلفية والـ APIs",
+        "tags": ["Node.js", "Express", "TypeScript", "MongoDB"],
+        "github": "https://github.com/Asemnajee",
+        "icon": "database",
         "image": ""
       }
     ]
+  },
+  "books": {
+    "title": "كتبي ومؤلفاتي التقنية",
+    "description": "مجموعة من الكتب والكتيبات البرمجية والتقنية بصيغة PDF أعددتها لمشاركة المعرفة مع مجتمع المطورين.",
+    "allCategories": "جميع التصنيفات",
+    "readPdf": "قراءة الكتاب",
+    "downloadPdf": "تحميل PDF",
+    "pages": "صفحة",
+    "items": [
+      {
+        "id": "book-backend-arch",
+        "title": "دليل هندسة الأنظمة الخلفية الحديثة",
+        "description": "مرجع شامل لتصميم وتطوير واجهات برمجة التطبيقات (APIs)، معمارية الـ Microservices، وأفضل ممارسات إدارة قواعد البيانات والـ Caching.",
+        "category": "هندسة البرمجيات والـ Backend",
+        "cover": "",
+        "pdfUrl": "#",
+        "pages": 180,
+        "year": 2025
+      },
+      {
+        "id": "book-flutter-mastery",
+        "title": "احتراف تطوير تطبيقات الموبايل باستخدام Flutter",
+        "description": "كتاب تطبيقي يغطي بناء التطبيقات من الصفر حتى الإنتاج، إدارة الحالة المتقدمة، واستدعاء الواجهات الخلفية بأمان وكفاءة.",
+        "category": "تطوير تطبيقات الموبايل",
+        "cover": "",
+        "pdfUrl": "#",
+        "pages": 220,
+        "year": 2024
+      },
+      {
+        "id": "book-clean-code-java",
+        "title": "أساسيات الكود النظيف في لغة Java",
+        "description": "دليل عملي لكتابة شفرة برمجية قابلة للقراءة والصيانة، تطبيق مبادئ SOLID، وأنماط التصميم الأكثر استخداماً في بيئات العمل.",
+        "category": "هندسة البرمجيات والـ Backend",
+        "cover": "",
+        "pdfUrl": "#",
+        "pages": 140,
+        "year": 2024
+      },
+      {
+        "id": "book-db-design",
+        "title": "مدخل إلى تصميم قواعد البيانات والـ ORM",
+        "description": "شرح عملي ومبسط لنظرية قواعد البيانات العلائقية، تصميم المخططات، كتابة الاستعلامات المعقدة، وبناء مكتبات ORM مخصصة.",
+        "category": "قواعد البيانات",
+        "cover": "",
+        "pdfUrl": "#",
+        "pages": 160,
+        "year": 2023
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "شهادات وتوصيات",
+    "description": "آراء وانطباعات من عملت معهم على مشاريع تقنية مختلفة."
   },
   "contact": {
     "title": "دعنا نعمل معاً",
@@ -112,4 +197,3 @@
     "copyright": "جميع الحقوق محفوظة."
   }
 }
-

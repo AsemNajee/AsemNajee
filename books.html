@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Technical Books & PDF Publications">
+  <title>Books</title>
+  
+  <!-- Google Fonts: Inter & Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- External CSS -->
+  <link rel="stylesheet" href="css/style.css?v=7">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="nav-brand skeleton skeleton-text" id="nav-brand"></a>
+
+      <nav id="nav-links" class="nav-links">
+        <a href="index.html" class="nav-link skeleton skeleton-text" id="nav-home"></a>
+        <a href="projects.html" class="nav-link skeleton skeleton-text" id="nav-projects"></a>
+        <a href="books.html" class="nav-link active skeleton skeleton-text" id="nav-books"></a>
+        <a href="index.html#skills" class="nav-link skeleton skeleton-text" id="nav-skills"></a>
+        <a href="index.html#testimonials" class="nav-link skeleton skeleton-text" id="nav-testimonials"></a>
+        <a href="index.html#contact" class="nav-link skeleton skeleton-text" id="nav-contact"></a>
+      </nav>
+
+      <div class="nav-controls">
+        <!-- Theme Toggle Button -->
+        <button id="theme-toggle-btn" class="control-btn theme-toggle-btn" onclick="window.toggleTheme()" aria-label="Switch Theme" title="Switch Theme">
+          <svg class="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+          </svg>
+          <svg class="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+          </svg>
+        </button>
+
+        <!-- Language Dropdown -->
+        <div class="lang-dropdown" id="lang-dropdown">
+          <button id="lang-dropdown-btn" class="control-btn lang-dropdown-btn" aria-haspopup="true" aria-expanded="false" aria-label="Select Language" title="Select Language">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+            <span id="current-lang-text" class="skeleton skeleton-text"></span>
+            <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
+          </button>
+          <div class="lang-dropdown-menu" id="lang-dropdown-menu" role="menu"></div>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" x2="20" y1="12" y2="12"></line>
+            <line x1="4" x2="20" y1="6" y2="6"></line>
+            <line x1="4" x2="20" y1="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+          <h1 class="page-title skeleton skeleton-title" id="books-page-title"></h1>
+          <p class="page-subtitle skeleton skeleton-desc" id="books-page-desc"></p>
+        </div>
+
+        <!-- Category Filter Tabs -->
+        <div class="filter-tabs" id="books-category-filters">
+          <button class="filter-btn skeleton"></button>
+          <button class="filter-btn skeleton"></button>
+          <button class="filter-btn skeleton"></button>
+        </div>
+
+        <!-- Books Grid -->
+        <div class="books-grid" id="books-wrapper">
+          <div class="skeleton-card skeleton"></div>
+          <div class="skeleton-card skeleton"></div>
+          <div class="skeleton-card skeleton"></div>
+          <div class="skeleton-card skeleton"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">
+        &copy; <span id="current-year"></span> <span id="footer-author" class="skeleton skeleton-text"></span>. <span id="footer-copyright" class="skeleton skeleton-text"></span>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts: Data Fallback + Template Engine -->
+  <script src="js/i18n-data.js?v=7"></script>
+  <script src="js/main.js?v=7" defer></script>
+</body>
+</html>

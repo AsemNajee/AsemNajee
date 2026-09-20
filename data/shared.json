@@ -5,6 +5,35 @@
     "linkedin": "https://www.linkedin.com/in/asemnajee",
     "telegram": "https://t.me/AsemNajee",
     "email": "asem.a.najee@gmail.com"
-  }
+  },
+  "testimonials": [
+    {
+      "id": "t1",
+      "name": "م. أحمد الغامدي",
+      "role": "مدير تقني - شركة حلول البرمجية",
+      "avatar": "",
+      "content": "عمل عاصم معنا على تطوير الـ Backend لأحد مشاريعنا الكبرى، وكان أداؤه ممتازاً جداً من ناحية سرعة التنفيذ ونظافة الكود والالتزام بالمواعيد.",
+      "rating": 5,
+      "project": "منصة إدارة الطلبات"
+    },
+    {
+      "id": "t2",
+      "name": "Sarah Jenkins",
+      "role": "Product Manager, TechFlow",
+      "avatar": "",
+      "content": "Asem delivered our Flutter mobile app ahead of schedule with top-notch quality. His communication and technical skills are exceptional.",
+      "rating": 5,
+      "project": "E-Commerce App"
+    },
+    {
+      "id": "t3",
+      "name": "د. عبدالمجيد الراوي",
+      "role": "مؤسس منصة تعليمية",
+      "avatar": "",
+      "content": "تجربتي مع عاصم كانت مميزة جداً، قام بهندسة نظام الـ API وقواعد البيانات بكفاءة عالية مما ساعدنا على التوسع السلس.",
+      "rating": 5,
+      "project": "نظام إدارة الطلاب"
+    }
+  ]
 }
 
