@@ -3,18 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Technical Books & PDF Publications">
-  <title>Books</title>
+  <meta name="description" content="Technical Article">
+  <title>Article | المقال التقني</title>
   
   <!-- Google Fonts: Inter & Cairo -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
   <!-- External CSS -->
+  <link rel="stylesheet" href="css/prism.css?v=12">
   <link rel="stylesheet" href="css/style.css?v=12">
+  
+  <!-- Marked Markdown Parser (with robust offline fallback in main.js) -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
+
+  <!-- Reading Progress Bar -->
+  <div class="reading-progress-container">
+    <div class="reading-progress-bar" id="reading-progress-bar"></div>
+  </div>
 
   <!-- Navigation Bar -->
   <header class="navbar">
@@ -24,8 +33,8 @@
       <nav id="nav-links" class="nav-links">
         <a href="index.html" class="nav-link skeleton skeleton-text" id="nav-home"></a>
         <a href="projects.html" class="nav-link skeleton skeleton-text" id="nav-projects"></a>
-        <a href="articles.html" class="nav-link skeleton skeleton-text" id="nav-articles"></a>
-        <a href="books.html" class="nav-link active skeleton skeleton-text" id="nav-books"></a>
+        <a href="articles.html" class="nav-link active skeleton skeleton-text" id="nav-articles"></a>
+        <a href="books.html" class="nav-link skeleton skeleton-text" id="nav-books"></a>
         <a href="index.html#skills" class="nav-link skeleton skeleton-text" id="nav-skills"></a>
         <a href="index.html#testimonials" class="nav-link skeleton skeleton-text" id="nav-testimonials"></a>
         <a href="index.html#contact" class="nav-link skeleton skeleton-text" id="nav-contact"></a>
@@ -79,37 +88,72 @@
   </header>
 
   <main>
-    <section class="section">
-      <div class="container">
-        <!-- Page Header -->
-        <div class="page-header">
-          <h1 class="page-title skeleton skeleton-title" id="books-page-title"></h1>
-          <p class="page-subtitle skeleton skeleton-desc" id="books-page-desc"></p>
+    <article class="article-reader-container">
+      <div class="container container-narrow">
+        <!-- Breadcrumbs & Back Navigation -->
+        <nav class="article-breadcrumbs" aria-label="Breadcrumb" id="article-breadcrumbs">
+          <a href="index.html" class="breadcrumb-item" id="breadcrumb-home"></a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="articles.html" class="breadcrumb-item" id="breadcrumb-articles"></a>
+          <span class="breadcrumb-sep">/</span>
+          <span class="breadcrumb-item active" id="breadcrumb-current"></span>
+        </nav>
+
+        <!-- Article Header -->
+        <header class="article-header">
+          <div class="article-header-meta">
+            <span class="article-category-badge skeleton" id="article-category-badge"></span>
+            <span class="article-date skeleton skeleton-text" id="article-date"></span>
+            <span class="article-readtime skeleton skeleton-text" id="article-readtime"></span>
+          </div>
+
+          <h1 class="article-main-title skeleton skeleton-title" id="article-main-title"></h1>
+          <p class="article-main-desc skeleton skeleton-desc" id="article-main-desc"></p>
+
+          <div class="article-tags" id="article-tags"></div>
+        </header>
+
+        <!-- Article Markdown Content -->
+        <div class="markdown-body" id="article-content">
+          <div class="article-loading-state">
+            <div class="skeleton skeleton-title" style="width: 80%; height: 2rem; margin-bottom: 1.5rem;"></div>
+            <div class="skeleton skeleton-desc" style="width: 100%; height: 1rem; margin-bottom: 0.75rem;"></div>
+            <div class="skeleton skeleton-desc" style="width: 95%; height: 1rem; margin-bottom: 0.75rem;"></div>
+            <div class="skeleton skeleton-desc" style="width: 90%; height: 1rem; margin-bottom: 2rem;"></div>
+            <div class="skeleton" style="width: 100%; height: 12rem; border-radius: 8px;"></div>
+          </div>
         </div>
 
-        <!-- Category Filter Tabs -->
-        <div class="filter-tabs" id="books-category-filters">
-          <button class="filter-btn skeleton"></button>
-          <button class="filter-btn skeleton"></button>
-          <button class="filter-btn skeleton"></button>
-        </div>
+        <!-- Article Footer & Actions -->
+        <footer class="article-footer">
+          <div class="article-share-actions">
+            <a href="articles.html" class="btn btn-outline" id="article-back-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="back-arrow-icon">
+                <path d="m15 18-6-6 6-6"/>
+              </svg>
+              <span id="article-back-text">العودة إلى المقالات</span>
+            </a>
 
-        <!-- Books Grid -->
-        <div class="books-grid" id="books-wrapper">
-          <div class="skeleton-card skeleton"></div>
-          <div class="skeleton-card skeleton"></div>
-          <div class="skeleton-card skeleton"></div>
-          <div class="skeleton-card skeleton"></div>
-        </div>
+            <button class="btn btn-outline" id="article-copy-link-btn" title="Copy Link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+              </svg>
+              <span id="article-copy-text">نسخ الرابط</span>
+            </button>
+          </div>
+        </footer>
       </div>
-    </section>
+    </article>
   </main>
 
   <!-- Footer -->
   <footer class="footer">
-    <div class="container">
-      <p class="footer-text">
-        &copy; <span id="current-year"></span> <span id="footer-author" class="skeleton skeleton-text"></span>. <span id="footer-copyright" class="skeleton skeleton-text"></span>
+    <div class="container footer-content">
+      <p class="footer-author skeleton skeleton-text" id="footer-author"></p>
+      <p class="footer-copyright">
+        <span id="footer-copyright" class="skeleton skeleton-text"></span>
+        <span id="current-year"></span>
       </p>
     </div>
   </footer>
@@ -123,7 +167,7 @@
       </svg>
       <span id="bnav-home">الرئيسية</span>
     </a>
-    <a href="articles.html" class="bottom-nav-item" data-page="articles">
+    <a href="articles.html" class="bottom-nav-item active" data-page="articles">
       <svg class="bottom-nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
         <path d="M6 6h10"/>
@@ -132,7 +176,7 @@
       </svg>
       <span id="bnav-articles">المقالات</span>
     </a>
-    <a href="books.html" class="bottom-nav-item active" data-page="books">
+    <a href="books.html" class="bottom-nav-item" data-page="books">
       <svg class="bottom-nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
         <path d="M6 2v20"/>
@@ -141,7 +185,8 @@
     </a>
   </nav>
 
-  <!-- Scripts: Data Fallback + Template Engine -->
+  <!-- Scripts: Syntax Highlighter + Data Fallback + Template Engine -->
+  <script src="js/prism.min.js?v=12"></script>
   <script src="js/i18n-data.js?v=12"></script>
   <script src="js/main.js?v=12" defer></script>
 </body>

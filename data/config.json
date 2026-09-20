@@ -1,5 +1,13 @@
 {
   "defaultLanguage": "ar",
+  "features": {
+    "skills": true,
+    "projects": true,
+    "articles": true,
+    "books": true,
+    "testimonials": true,
+    "contact": true
+  },
   "languages": [
     {
       "code": "ar",

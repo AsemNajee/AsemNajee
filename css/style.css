@@ -85,6 +85,12 @@ html[dir="rtl"] body {
   padding: 0;
 }
 
+svg {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
@@ -604,9 +610,11 @@ html:not(.dark) .theme-icon-moon {
 .btn svg {
   width: 1.125rem;
   height: 1.125rem;
+  flex-shrink: 0;
 }
 
-html[dir="rtl"] .btn svg {
+html[dir="rtl"] .btn svg.flip-rtl,
+html[dir="rtl"] .btn svg.arrow-icon {
   transform: scaleX(-1);
 }
 
@@ -1329,6 +1337,11 @@ html.dark .skeleton::after {
   margin-bottom: 0.75rem;
 }
 
+.testimonial-quote-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
 .testimonial-card[dir="rtl"] .testimonial-quote-icon {
   margin-left: auto;
   margin-right: 0;
@@ -1556,3 +1569,663 @@ html:not(.dark) .book-cover-area {
   gap: 0.35rem;
   justify-content: center;
 }
+
+/* --------------------------------------------------------------------------
+   14. Articles & Categories Section
+   -------------------------------------------------------------------------- */
+
+.container-narrow {
+  max-width: 52rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+/* Category Filter Bar (UX Optimized Chips/Pills) */
+.category-filter-wrapper {
+  margin-bottom: 2rem;
+}
+
+.category-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.category-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.category-chip:hover {
+  border-color: var(--cat-color, var(--primary));
+  color: var(--foreground);
+  transform: translateY(-1px);
+}
+
+.category-chip.active {
+  background: color-mix(in srgb, var(--cat-color, var(--primary)) 12%, var(--card));
+  border-color: var(--cat-color, var(--primary));
+  color: var(--cat-color, var(--primary));
+  font-weight: 700;
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--cat-color, var(--primary)) 18%, transparent);
+}
+
+.chip-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.chip-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.chip-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.15rem 0.45rem;
+  font-size: 0.725rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  background-color: var(--secondary);
+  color: var(--muted-foreground);
+  transition: all var(--transition-fast);
+}
+
+.category-chip.active .chip-count {
+  background: color-mix(in srgb, var(--cat-color, var(--primary)) 20%, transparent);
+  color: var(--cat-color, var(--primary));
+}
+
+.active-category-info {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.active-category-desc {
+  font-size: 0.925rem;
+  color: var(--muted-foreground);
+  max-width: 40rem;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .category-filter-bar {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 0.25rem 0.25rem 0.75rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .category-filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-chip {
+    flex-shrink: 0;
+  }
+}
+
+/* Articles Grid & Cards */
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 1.5rem;
+}
+
+.article-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all var(--transition-normal);
+  text-decoration: none;
+  color: inherit;
+}
+
+.article-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.article-card-cover {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  background: linear-gradient(135deg, var(--bg-secondary), var(--card));
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.article-card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.article-card:hover .article-card-cover img {
+  transform: scale(1.05);
+}
+
+.article-cover-mockup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--muted-foreground);
+}
+
+.article-cover-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--cat-color, var(--primary));
+  opacity: 0.85;
+}
+
+.article-cover-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.article-card-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.article-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.65rem;
+}
+
+.article-category-badge {
+  font-size: 0.725rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-full);
+  background-color: color-mix(in srgb, var(--cat-color, var(--primary)) 12%, transparent);
+  color: var(--cat-color, var(--primary));
+  border: 1px solid color-mix(in srgb, var(--cat-color, var(--primary)) 30%, transparent);
+}
+
+.article-date, .article-readtime {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.article-card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--foreground);
+  line-height: 1.45;
+  margin-bottom: 0.5rem;
+  transition: color var(--transition-fast);
+}
+
+.article-card:hover .article-card-title {
+  color: var(--primary);
+}
+
+.article-card-desc {
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+
+.article-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.article-read-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.article-read-link svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  transition: transform var(--transition-fast);
+}
+
+[dir="rtl"] .article-read-link svg {
+  transform: scaleX(-1);
+}
+
+.article-card:hover .article-read-link svg {
+  transform: translateX(3px);
+}
+
+[dir="rtl"] .article-card:hover .article-read-link svg {
+  transform: scaleX(-1) translateX(3px);
+}
+
+/* --------------------------------------------------------------------------
+   15. Article Reader & Markdown Styles
+   -------------------------------------------------------------------------- */
+
+/* Reading Progress Bar */
+.reading-progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: transparent;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.reading-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--primary), #8b5cf6);
+  transition: width 0.1s ease;
+}
+
+.article-reader-container {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+}
+
+/* Breadcrumbs */
+.article-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+}
+
+.article-breadcrumbs a {
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.article-breadcrumbs a:hover {
+  color: var(--primary);
+}
+
+.breadcrumb-sep {
+  opacity: 0.5;
+}
+
+.breadcrumb-item.active {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+/* Article Header */
+.article-header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.article-header-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.85rem;
+}
+
+.article-main-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--foreground);
+  margin-bottom: 0.85rem;
+}
+
+.article-main-desc {
+  font-size: 1.15rem;
+  color: var(--muted-foreground);
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+}
+
+.article-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+/* Markdown Body Typography */
+.markdown-body {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--foreground);
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4 {
+  font-weight: 700;
+  color: var(--foreground);
+  margin-top: 2.25rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.markdown-body h1 {
+  font-size: 1.85rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.markdown-body h2 {
+  font-size: 1.45rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.markdown-body h3 {
+  font-size: 1.2rem;
+}
+
+.markdown-body p {
+  margin-bottom: 1.35rem;
+}
+
+.markdown-body blockquote {
+  border-inline-start: 4px solid var(--primary);
+  background-color: var(--secondary);
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius-sm);
+  margin: 1.5rem 0;
+  color: var(--foreground);
+  font-style: italic;
+}
+
+.markdown-body blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-inline-start: 1.75rem;
+  margin-bottom: 1.35rem;
+}
+
+.markdown-body li {
+  margin-bottom: 0.45rem;
+}
+
+.markdown-body code {
+  font-family: 'JetBrains Mono', Consolas, Monaco, monospace;
+  font-size: 0.875em;
+  background-color: var(--secondary);
+  color: var(--primary);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.markdown-body pre {
+  background-color: #0f172a;
+  color: #e2e8f0;
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border: 1px solid var(--border);
+  position: relative;
+  direction: ltr;
+  text-align: left;
+}
+
+.markdown-body pre code {
+  background: transparent;
+  border: none;
+  color: inherit;
+  padding: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* Copy Code Button */
+.code-block-wrapper {
+  position: relative;
+  margin: 1.5rem 0;
+}
+
+.code-block-wrapper pre {
+  margin: 0;
+}
+
+.copy-code-btn {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.65rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e2e8f0;
+  padding: 0.25rem 0.55rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.725rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  backdrop-filter: blur(4px);
+  z-index: 5;
+}
+
+.copy-code-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+/* Responsive Tables for Markdown (Prevents Mobile Overflow) */
+.table-responsive {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1.75rem 0;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+
+.table-responsive table,
+.markdown-body table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  margin: 0 !important;
+  font-size: 0.9rem;
+}
+
+.markdown-body th,
+.markdown-body td {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  text-align: start;
+}
+
+.markdown-body th {
+  background-color: var(--secondary);
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.markdown-body hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2.25rem 0;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin: 1.5rem auto;
+  display: block;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Article Footer */
+.article-footer {
+  margin-top: 3.5rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.article-share-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+[dir="rtl"] .back-arrow-icon {
+  transform: scaleX(-1);
+}
+
+/* --------------------------------------------------------------------------
+   15. Mobile Bottom Navigation Bar (BottomNavBar)
+   -------------------------------------------------------------------------- */
+.bottom-nav-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .bottom-nav-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(3.75rem + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: color-mix(in srgb, var(--surface) 92%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border);
+    z-index: 990;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Add padding to body so the bottom nav bar never covers footer or content */
+  body {
+    padding-bottom: calc(4.25rem + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    height: 100%;
+    color: var(--muted-foreground);
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 500;
+    gap: 0.25rem;
+    transition: all var(--transition-fast);
+    position: relative;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .bottom-nav-icon {
+    width: 1.35rem;
+    height: 1.35rem;
+    transition: transform var(--transition-fast), stroke var(--transition-fast);
+  }
+
+  .bottom-nav-item:hover,
+  .bottom-nav-item:focus {
+    color: var(--foreground);
+  }
+
+  .bottom-nav-item.active {
+    color: var(--primary);
+    font-weight: 700;
+  }
+
+  .bottom-nav-item.active .bottom-nav-icon {
+    transform: translateY(-2px);
+    stroke: var(--primary);
+  }
+
+  .bottom-nav-item.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 28px;
+    height: 3px;
+    border-radius: var(--radius-full);
+    background: var(--primary);
+  }
+
+  /* Requirement: Hide the buttons placed in bottomnav from the mobile header menu */
+  .nav-links #nav-home,
+  .nav-links #nav-articles,
+  .nav-links #nav-books {
+    display: none !important;
+  }
+}
+

@@ -25,7 +25,7 @@
             "ar": "شرح معمارية الطبقات (Layered Architecture)، الـ DTOs، والتعامل الاحترافي مع الاستثناءات.",
             "en": "A practical guide to layered architecture, DTOs, and global exception handling."
           },
-          "date": "2025-06-15",
+          "date": "2026-09-06",
           "readTime": {
             "ar": "7 دقائق قراءة",
             "en": "7 min read"
@@ -44,7 +44,7 @@
             "ar": "كيفية تسريع استعلامات SQL المعقدة وتجنب أخطاء الفهرسة الشائعة في بيئات الإنتاج.",
             "en": "How to optimize complex SQL queries and avoid common indexing pitfalls in production."
           },
-          "date": "2025-05-28",
+          "date": "2026-08-20",
           "readTime": {
             "ar": "5 دقائق قراءة",
             "en": "5 min read"
@@ -79,7 +79,7 @@
             "ar": "تحليل عملي لاختيار النمط الأنسب لمشروعك بين BLoC و Provider و Riverpod.",
             "en": "Comprehensive evaluation to help you pick the right state management approach."
           },
-          "date": "2025-05-20",
+          "date": "2026-08-05",
           "readTime": {
             "ar": "9 دقائق قراءة",
             "en": "9 min read"
@@ -98,13 +98,156 @@
             "ar": "قواعد كتابة كود قابل للقراءة والصيانة وإعادة الاستخدام في تطبيقات Flutter.",
             "en": "Guidelines for writing maintainable, readable, and reusable code in Flutter projects."
           },
-          "date": "2025-04-12",
+          "date": "2026-04-20",
           "readTime": {
             "ar": "6 دقائق قراءة",
             "en": "6 min read"
           },
           "cover": "",
           "tags": ["Dart", "Clean Code", "Best Practices"]
+        }
+      ]
+    },
+    {
+      "folder": "folder3",
+      "title": {
+        "ar": "تطوير الواجهات وتجربة المستخدم",
+        "en": "Frontend & UI Engineering"
+      },
+      "description": {
+        "ar": "تقنيات وتطوير واجهات الويب الحديثة، أداء المتصفح، وأحدث مواصفات CSS و JavaScript.",
+        "en": "Modern frontend architectures, responsive design, browser performance, and advanced CSS/JS."
+      },
+      "color": "#8b5cf6",
+      "icon": "layout",
+      "cover": "",
+      "articles": [
+        {
+          "file": "modern-css-architecture.md",
+          "slug": "modern-css-architecture",
+          "title": {
+            "ar": "معمارية CSS الحديثة: من Container Queries إلى :has() و Subgrid",
+            "en": "Modern CSS Architecture: Container Queries, :has(), and Subgrid"
+          },
+          "description": {
+            "ar": "كيف تعيد الميزات الحديثة في CSS تشكيل طريقة بناء مكونات الويب القابلة لإعادة الاستخدام.",
+            "en": "How cutting-edge CSS features revolutionize component-driven responsive web design."
+          },
+          "date": "2026-08-30",
+          "readTime": {
+            "ar": "8 دقائق قراءة",
+            "en": "8 min read"
+          },
+          "cover": "",
+          "tags": ["CSS", "Frontend", "Responsive", "Web Standards"]
+        },
+        {
+          "file": "web-performance-core-vitals.md",
+          "slug": "web-performance-core-vitals",
+          "title": {
+            "ar": "دليل تحسين أداء الويب وتحقيق نتائج قياسية في Core Web Vitals",
+            "en": "Web Performance Optimization: Mastering Core Web Vitals"
+          },
+          "description": {
+            "ar": "خطوات عملية وقوائم تدقيق تفصيلية لتحسين سرعة التحميل (LCP)، الاستجابة (INP)، وثبات العرض (CLS).",
+            "en": "Actionable strategies and checklists to optimize LCP, INP, and CLS for stellar user experience."
+          },
+          "date": "2026-07-20",
+          "readTime": {
+            "ar": "10 دقائق قراءة",
+            "en": "10 min read"
+          },
+          "cover": "",
+          "tags": ["Performance", "Core Web Vitals", "LCP", "Frontend"]
+        }
+      ]
+    },
+    {
+      "folder": "folder4",
+      "title": {
+        "ar": "عمليات التطوير والسحابة (DevOps)",
+        "en": "DevOps & Cloud Engineering"
+      },
+      "description": {
+        "ar": "أتمتة خطوط النشر، بناء الحاويات، إدارة البنى التحتية، والممارسات السحابية الحديثة.",
+        "en": "CI/CD automation, containerization with Docker, cloud infrastructure, and operational reliability."
+      },
+      "color": "#10b981",
+      "icon": "terminal",
+      "cover": "",
+      "articles": [
+        {
+          "file": "docker-production-best-practices.md",
+          "slug": "docker-production-best-practices",
+          "title": {
+            "ar": "أفضل ممارسات Docker للإنتاج: تقليص الحجم وتأمين الحاويات",
+            "en": "Docker Production Best Practices: Slim & Secure Containers"
+          },
+          "description": {
+            "ar": "كيفية كتابة Dockerfiles احترافية باستخدام Multi-stage builds وتقليل المخاطر الأمنية.",
+            "en": "Writing production-grade Dockerfiles with multi-stage builds and minimal attack surfaces."
+          },
+          "date": "2026-09-13",
+          "readTime": {
+            "ar": "7 دقائق قراءة",
+            "en": "7 min read"
+          },
+          "cover": "",
+          "tags": ["Docker", "DevOps", "Containers", "Security"]
+        },
+        {
+          "file": "github-actions-cicd-pipeline.md",
+          "slug": "github-actions-cicd-pipeline",
+          "title": {
+            "ar": "بناء خط أنابيب CI/CD متكامل واحترافي باستخدام GitHub Actions",
+            "en": "Building Robust CI/CD Pipelines with GitHub Actions"
+          },
+          "description": {
+            "ar": "دليل عملي خطوة بخطوة لأتمتة الاختبارات، الفحص الأمني، والنشر التلقائي للخدمات.",
+            "en": "A hands-on guide to automating tests, security audits, and automated deployments."
+          },
+          "date": "2026-06-20",
+          "readTime": {
+            "ar": "8 دقائق قراءة",
+            "en": "8 min read"
+          },
+          "cover": "",
+          "tags": ["GitHub Actions", "CI/CD", "DevOps", "Automation"]
+        }
+      ]
+    },
+    {
+      "folder": "folder5",
+      "title": {
+        "ar": "تصميم ومعمارية الأنظمة (System Design)",
+        "en": "System Design & Architecture"
+      },
+      "description": {
+        "ar": "مفاهيم التوسع، مقارنة المعماريات، التعامل مع البيانات الضخمة، وتصميم الأنظمة الموزعة.",
+        "en": "Scalability, architectural patterns, high-availability distributed systems, and trade-off analysis."
+      },
+      "color": "#f59e0b",
+      "icon": "cpu",
+      "cover": "",
+      "articles": [
+        {
+          "file": "microservices-vs-monolith.md",
+          "slug": "microservices-vs-monolith",
+          "title": {
+            "ar": "الأنظمة الموزعة (Microservices) مقابل النواة الواحدة (Monolith): متى وكيف تختار؟",
+            "en": "Microservices vs Modular Monolith: The Pragmatic Architectural Guide"
+          },
+          "description": {
+            "ar": "مقارنة متعمقة لتقييم المفاضلات (Trade-offs)، تكلفة الصيانة، ومعايير اتخاذ القرار التقني الصائب.",
+            "en": "A deep dive into architectural trade-offs, operational complexity, and choosing the right fit."
+          },
+          "date": "2026-09-17",
+          "readTime": {
+            "ar": "11 دقيقة قراءة",
+            "en": "11 min read"
+          },
+          "cover": "",
+          "tags": ["System Design", "Microservices", "Architecture", "Monolith"]
         }
       ]
     }

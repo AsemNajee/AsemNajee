@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Technical Books & PDF Publications">
-  <title>Books</title>
+  <meta name="description" content="Technical Articles & Engineering Publications">
+  <title>Articles | المقالات التقنية</title>
   
   <!-- Google Fonts: Inter & Cairo -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,8 +24,8 @@
       <nav id="nav-links" class="nav-links">
         <a href="index.html" class="nav-link skeleton skeleton-text" id="nav-home"></a>
         <a href="projects.html" class="nav-link skeleton skeleton-text" id="nav-projects"></a>
-        <a href="articles.html" class="nav-link skeleton skeleton-text" id="nav-articles"></a>
-        <a href="books.html" class="nav-link active skeleton skeleton-text" id="nav-books"></a>
+        <a href="articles.html" class="nav-link active skeleton skeleton-text" id="nav-articles"></a>
+        <a href="books.html" class="nav-link skeleton skeleton-text" id="nav-books"></a>
         <a href="index.html#skills" class="nav-link skeleton skeleton-text" id="nav-skills"></a>
         <a href="index.html#testimonials" class="nav-link skeleton skeleton-text" id="nav-testimonials"></a>
         <a href="index.html#contact" class="nav-link skeleton skeleton-text" id="nav-contact"></a>
@@ -83,20 +83,23 @@
       <div class="container">
         <!-- Page Header -->
         <div class="page-header">
-          <h1 class="page-title skeleton skeleton-title" id="books-page-title"></h1>
-          <p class="page-subtitle skeleton skeleton-desc" id="books-page-desc"></p>
+          <h1 class="page-title skeleton skeleton-title" id="articles-page-title"></h1>
+          <p class="page-subtitle skeleton skeleton-desc" id="articles-page-desc"></p>
+        </div>
+
+        <!-- Categories Showcase Grid -->
+        <div class="categories-showcase" id="categories-showcase">
+          <!-- Populated dynamically from articles/categories.json -->
         </div>
 
         <!-- Category Filter Tabs -->
-        <div class="filter-tabs" id="books-category-filters">
-          <button class="filter-btn skeleton"></button>
+        <div class="filter-tabs" id="articles-category-filters">
           <button class="filter-btn skeleton"></button>
           <button class="filter-btn skeleton"></button>
         </div>
 
-        <!-- Books Grid -->
-        <div class="books-grid" id="books-wrapper">
-          <div class="skeleton-card skeleton"></div>
+        <!-- Articles Grid -->
+        <div class="articles-grid" id="articles-wrapper">
           <div class="skeleton-card skeleton"></div>
           <div class="skeleton-card skeleton"></div>
           <div class="skeleton-card skeleton"></div>
@@ -107,9 +110,11 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <div class="container">
-      <p class="footer-text">
-        &copy; <span id="current-year"></span> <span id="footer-author" class="skeleton skeleton-text"></span>. <span id="footer-copyright" class="skeleton skeleton-text"></span>
+    <div class="container footer-content">
+      <p class="footer-author skeleton skeleton-text" id="footer-author"></p>
+      <p class="footer-copyright">
+        <span id="footer-copyright" class="skeleton skeleton-text"></span>
+        <span id="current-year"></span>
       </p>
     </div>
   </footer>
@@ -123,7 +128,7 @@
       </svg>
       <span id="bnav-home">الرئيسية</span>
     </a>
-    <a href="articles.html" class="bottom-nav-item" data-page="articles">
+    <a href="articles.html" class="bottom-nav-item active" data-page="articles">
       <svg class="bottom-nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
         <path d="M6 6h10"/>
@@ -132,7 +137,7 @@
       </svg>
       <span id="bnav-articles">المقالات</span>
     </a>
-    <a href="books.html" class="bottom-nav-item active" data-page="books">
+    <a href="books.html" class="bottom-nav-item" data-page="books">
       <svg class="bottom-nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
         <path d="M6 2v20"/>

@@ -8,6 +8,7 @@
     "home": "Home",
     "skills": "Skills",
     "projects": "Projects",
+    "articles": "Articles",
     "books": "Books",
     "testimonials": "Testimonials",
     "contact": "Contact"
@@ -182,6 +183,16 @@
         "year": 2023
       }
     ]
+  },
+  "articles": {
+    "title": "Technical Articles & Research",
+    "description": "In-depth engineering tutorials, best practices, and architecture guides across web, mobile, and software engineering.",
+    "allCategories": "All Categories",
+    "articleCount": "Articles",
+    "readMore": "Read Article",
+    "backToArticles": "Back to Articles",
+    "copyLink": "Copy Link",
+    "linkCopied": "Link Copied!"
   },
   "testimonials": {
     "title": "Testimonials & Endorsements",

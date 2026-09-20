@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- External CSS -->
-  <link rel="stylesheet" href="css/style.css?v=7">
+  <link rel="stylesheet" href="css/style.css?v=12">
 </head>
 <body>
 
@@ -24,6 +24,7 @@
       <nav id="nav-links" class="nav-links">
         <a href="index.html" class="nav-link skeleton skeleton-text" id="nav-home"></a>
         <a href="projects.html" class="nav-link active skeleton skeleton-text" id="nav-projects"></a>
+        <a href="articles.html" class="nav-link skeleton skeleton-text" id="nav-articles"></a>
         <a href="books.html" class="nav-link skeleton skeleton-text" id="nav-books"></a>
         <a href="index.html#skills" class="nav-link skeleton skeleton-text" id="nav-skills"></a>
         <a href="index.html#testimonials" class="nav-link skeleton skeleton-text" id="nav-testimonials"></a>
@@ -116,8 +117,35 @@
     </div>
   </footer>
 
+  <!-- Mobile Bottom Navigation Bar -->
+  <nav class="bottom-nav-bar" id="bottom-nav-bar" aria-label="Mobile Navigation">
+    <a href="index.html" class="bottom-nav-item" data-page="home">
+      <svg class="bottom-nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span id="bnav-home">الرئيسية</span>
+    </a>
+    <a href="articles.html" class="bottom-nav-item" data-page="articles">
+      <svg class="bottom-nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+        <path d="M6 6h10"/>
+        <path d="M6 10h10"/>
+        <path d="M6 14h6"/>
+      </svg>
+      <span id="bnav-articles">المقالات</span>
+    </a>
+    <a href="books.html" class="bottom-nav-item" data-page="books">
+      <svg class="bottom-nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+        <path d="M6 2v20"/>
+      </svg>
+      <span id="bnav-books">الكتب</span>
+    </a>
+  </nav>
+
   <!-- Scripts: Data Fallback + Template Engine -->
-  <script src="js/i18n-data.js?v=7"></script>
-  <script src="js/main.js?v=7" defer></script>
+  <script src="js/i18n-data.js?v=12"></script>
+  <script src="js/main.js?v=12" defer></script>
 </body>
 </html>

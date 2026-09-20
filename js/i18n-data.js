@@ -4,6 +4,14 @@
 window.I18N_DATA = {
   "config": {
     "defaultLanguage": "ar",
+    "features": {
+      "skills": true,
+      "projects": true,
+      "articles": true,
+      "books": true,
+      "testimonials": true,
+      "contact": true
+    },
     "languages": [
       {
         "code": "ar",
@@ -70,6 +78,7 @@ window.I18N_DATA = {
         "home": "الرئيسية",
         "skills": "المهارات",
         "projects": "المشاريع",
+        "articles": "المقالات",
         "books": "الكتب",
         "testimonials": "التوصيات",
         "contact": "تواصل معي"
@@ -307,6 +316,16 @@ window.I18N_DATA = {
           }
         ]
       },
+      "articles": {
+        "title": "المقالات والأبحاث التقنية",
+        "description": "شروحات وأدلة برمجية وهندسية معمقة في مجالات تطوير الويب وتطبيقات الموبايل وهندسة البرمجيات.",
+        "allCategories": "جميع التصنيفات",
+        "articleCount": "مقالات",
+        "readMore": "قراءة المقال",
+        "backToArticles": "العودة إلى المقالات",
+        "copyLink": "نسخ الرابط",
+        "linkCopied": "تم نسخ الرابط!"
+      },
       "testimonials": {
         "title": "شهادات وتوصيات",
         "description": "آراء وانطباعات من عملت معهم على مشاريع تقنية مختلفة."
@@ -331,6 +350,7 @@ window.I18N_DATA = {
         "home": "Home",
         "skills": "Skills",
         "projects": "Projects",
+        "articles": "Articles",
         "books": "Books",
         "testimonials": "Testimonials",
         "contact": "Contact"
@@ -567,6 +587,16 @@ window.I18N_DATA = {
             "year": 2023
           }
         ]
+      },
+      "articles": {
+        "title": "Technical Articles & Research",
+        "description": "In-depth engineering tutorials, best practices, and architecture guides across web, mobile, and software engineering.",
+        "allCategories": "All Categories",
+        "articleCount": "Articles",
+        "readMore": "Read Article",
+        "backToArticles": "Back to Articles",
+        "copyLink": "Copy Link",
+        "linkCopied": "Link Copied!"
       },
       "testimonials": {
         "title": "Testimonials & Endorsements",

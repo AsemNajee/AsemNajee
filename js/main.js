@@ -52,6 +52,14 @@
   const fallbackI18n = (typeof window !== 'undefined' && window.I18N_DATA) ? window.I18N_DATA : {
     config: {
       defaultLanguage: 'ar',
+      features: {
+        skills: true,
+        projects: true,
+        articles: true,
+        books: true,
+        testimonials: true,
+        contact: true
+      },
       languages: [
         { code: 'ar', name: 'العربية', dir: 'rtl', font: 'Cairo', file: 'data/ar.json' },
         { code: 'en', name: 'English', dir: 'ltr', font: 'Inter', file: 'data/en.json' }
@@ -78,6 +86,8 @@
   // Filter states
   let currentProjectsFilter = 'all';
   let currentBooksFilter = 'all';
+  let currentArticlesFilter = 'all';
+  let articlesData = fallbackI18n.articles || { categories: [] };
 
   // --- Theme Management ---
   function initTheme() {
@@ -251,6 +261,357 @@
     `;
   }
 
+  // --- Markdown Parser & Renderer ---
+  function parseMarkdown(md) {
+    if (typeof window !== 'undefined' && window.marked && typeof window.marked.parse === 'function') {
+      return window.marked.parse(md);
+    }
+
+    if (!md) return '';
+    let html = md
+      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+      .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+      .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+      .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+      .replace(/^\> (.*$)/gim, '<blockquote><p>$1</p></blockquote>')
+      .replace(/```([a-z0-9_-]*)\n([\s\S]*?)```/gim, (match, lang, code) => {
+        const safeCode = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return `<pre><code class="language-${lang}">${safeCode}</code></pre>`;
+      })
+      .replace(/`([^`]+)`/gim, '<code>$1</code>')
+      .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/gim, '<em>$1</em>')
+      .replace(/^---$/gim, '<hr>')
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+      .replace(/!\[([^\]]*)\]\(([^)]+)\)/gim, '<img src="$2" alt="$1">')
+      .replace(/^\- (.*$)/gim, '<li>$1</li>')
+      .replace(/\n\s*\n/gim, '</p><p>');
+
+    return `<p>${html}</p>`
+      .replace(/<p><\/p>/g, '')
+      .replace(/<p>(<h[1-6]>.*?<\/h[1-6]>)<\/p>/g, '$1')
+      .replace(/<p>(<hr>)<\/p>/g, '$1')
+      .replace(/<p>(<blockquote>.*?<\/blockquote>)<\/p>/g, '$1')
+      .replace(/<p>(<pre>[\s\S]*?<\/pre>)<\/p>/g, '$1');
+  }
+
+  function enhanceMarkdownCodeBlocks(container) {
+    if (!container) return;
+    const pres = container.querySelectorAll('pre');
+    pres.forEach(pre => {
+      if (pre.parentElement && pre.parentElement.classList.contains('code-block-wrapper')) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'code-block-wrapper';
+      pre.parentNode.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
+
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'copy-code-btn';
+      copyBtn.type = 'button';
+      copyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> <span>نسخ</span>';
+
+      copyBtn.onclick = () => {
+        const codeText = pre.querySelector('code') ? pre.querySelector('code').innerText : pre.innerText;
+        navigator.clipboard.writeText(codeText).then(() => {
+          copyBtn.querySelector('span').textContent = 'تم النسخ!';
+          setTimeout(() => {
+            copyBtn.querySelector('span').textContent = 'نسخ';
+          }, 2000);
+        });
+      };
+
+      wrapper.appendChild(copyBtn);
+    });
+  }
+
+  function enhanceMarkdownTables(container) {
+    if (!container) return;
+    const tables = container.querySelectorAll('table');
+    tables.forEach(table => {
+      if (table.parentElement && table.parentElement.classList.contains('table-responsive')) return;
+      const wrapper = document.createElement('div');
+      wrapper.className = 'table-responsive';
+      table.parentNode.insertBefore(wrapper, table);
+      wrapper.appendChild(table);
+    });
+  }
+
+  // --- Relative Time Formatter (e.g. "منذ أسبوعين", "منذ شهر", "2 weeks ago") ---
+  function getRelativeTimeString(dateStr, langCode) {
+    if (!dateStr) return '';
+    const now = new Date();
+    const date = new Date(dateStr);
+    if (isNaN(date.getTime())) return dateStr;
+
+    const diffMs = now.getTime() - date.getTime();
+    const isAr = (langCode === 'ar');
+
+    const diffSec = Math.floor(diffMs / 1000);
+    const diffMin = Math.floor(diffSec / 60);
+    const diffHours = Math.floor(diffMin / 60);
+    const diffDays = Math.floor(diffHours / 24);
+
+    if (diffDays <= 0) {
+      if (diffHours <= 1) return isAr ? 'منذ قليل' : 'Just now';
+      return isAr ? `منذ ${diffHours} ساعات` : `${diffHours} hours ago`;
+    }
+    if (diffDays === 1) return isAr ? 'أمس' : 'Yesterday';
+    if (diffDays === 2) return isAr ? 'منذ يومين' : '2 days ago';
+    if (diffDays < 7) return isAr ? `منذ ${diffDays} أيام` : `${diffDays} days ago`;
+
+    const diffWeeks = Math.floor(diffDays / 7);
+    if (diffWeeks === 1) return isAr ? 'منذ أسبوع' : '1 week ago';
+    if (diffWeeks === 2) return isAr ? 'منذ أسبوعين' : '2 weeks ago';
+    if (diffWeeks < 4) return isAr ? `منذ ${diffWeeks} أسابيع` : `${diffWeeks} weeks ago`;
+
+    const diffMonths = Math.floor(diffDays / 30.4);
+    if (diffMonths <= 1) return isAr ? 'منذ شهر' : '1 month ago';
+    if (diffMonths === 2) return isAr ? 'منذ شهرين' : '2 months ago';
+    if (diffMonths < 11) {
+      return isAr ? `منذ ${diffMonths} أشهر` : `${diffMonths} months ago`;
+    }
+
+    const diffYears = Math.floor(diffDays / 365);
+    if (diffYears <= 1) return isAr ? 'منذ سنة' : '1 year ago';
+    if (diffYears === 2) return isAr ? 'منذ سنتين' : '2 years ago';
+    return isAr ? `منذ ${diffYears} سنوات` : `${diffYears} years ago`;
+  }
+
+  function renderArticleCardHtml(article, category, data, langCode) {
+    const catTitle = typeof category.title === 'object' ? (category.title[langCode] || category.title.ar || category.title.en) : category.title;
+    const artTitle = typeof article.title === 'object' ? (article.title[langCode] || article.title.ar || article.title.en) : article.title;
+    const artDesc = typeof article.description === 'object' ? (article.description[langCode] || article.description.ar || article.description.en) : article.description;
+    const readTime = typeof article.readTime === 'object' ? (article.readTime[langCode] || article.readTime.ar || article.readTime.en) : article.readTime;
+    const readMoreLabel = (data.articles && data.articles.readMore) ? data.articles.readMore : (langCode === 'ar' ? 'قراءة المقال' : 'Read Article');
+    const catColor = category.color || '#3b82f6';
+    const iconSvg = ICONS[category.icon] || ICONS.code;
+    const relativeDate = getRelativeTimeString(article.date, langCode);
+
+    const coverHtml = article.cover
+      ? `<img src="${article.cover}" alt="${artTitle}" loading="lazy">`
+      : `
+        <div class="article-cover-mockup" style="--cat-color: ${catColor};">
+          <div class="article-cover-icon">${iconSvg}</div>
+        </div>
+      `;
+
+    const articleUrl = `article.html?folder=${category.folder}&file=${article.file}`;
+
+    return `
+      <article class="article-card" data-category="${category.folder}" style="--cat-color: ${catColor};">
+        <a href="${articleUrl}" class="article-card-cover">
+          ${coverHtml}
+        </a>
+        <div class="article-card-body">
+          <div class="article-card-meta">
+            <span class="article-category-badge">${catTitle}</span>
+            <span class="article-date">${relativeDate}</span>
+            <span class="article-readtime">• ${readTime}</span>
+          </div>
+          <h3 class="article-card-title">
+            <a href="${articleUrl}">${artTitle}</a>
+          </h3>
+          <p class="article-card-desc">${artDesc}</p>
+          <div class="article-card-footer">
+            <a href="${articleUrl}" class="article-read-link">
+              <span>${readMoreLabel}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+    `;
+  }
+
+  async function renderArticleReader(langCode, data) {
+    const params = new URLSearchParams(window.location.search);
+    const folder = params.get('folder');
+    const file = params.get('file');
+    const slug = params.get('slug');
+
+    let targetCategory = null;
+    let targetArticle = null;
+
+    if (articlesData && Array.isArray(articlesData.categories)) {
+      for (const cat of articlesData.categories) {
+        for (const art of (cat.articles || [])) {
+          if ((folder && file && cat.folder === folder && art.file === file) ||
+              (slug && art.slug === slug)) {
+            targetCategory = cat;
+            targetArticle = art;
+            break;
+          }
+        }
+        if (targetArticle) break;
+      }
+    }
+
+    if (!targetArticle && articlesData && articlesData.categories && articlesData.categories[0] && articlesData.categories[0].articles[0]) {
+      targetCategory = articlesData.categories[0];
+      targetArticle = targetCategory.articles[0];
+    }
+
+    if (!targetArticle) return;
+
+    const catTitle = typeof targetCategory.title === 'object' ? (targetCategory.title[langCode] || targetCategory.title.ar || targetCategory.title.en) : targetCategory.title;
+    const artTitle = typeof targetArticle.title === 'object' ? (targetArticle.title[langCode] || targetArticle.title.ar || targetArticle.title.en) : targetArticle.title;
+    const artDesc = typeof targetArticle.description === 'object' ? (targetArticle.description[langCode] || targetArticle.description.ar || targetArticle.description.en) : targetArticle.description;
+    const readTime = typeof targetArticle.readTime === 'object' ? (targetArticle.readTime[langCode] || targetArticle.readTime.ar || targetArticle.readTime.en) : targetArticle.readTime;
+    const catColor = targetCategory.color || '#3b82f6';
+
+    document.title = `${artTitle} | ${data.hero ? data.hero.title : 'Portfolio'}`;
+
+    const breadcrumbHome = document.getElementById('breadcrumb-home');
+    const breadcrumbArticles = document.getElementById('breadcrumb-articles');
+    const breadcrumbCurrent = document.getElementById('breadcrumb-current');
+
+    if (breadcrumbHome) breadcrumbHome.textContent = data.nav.home || (langCode === 'ar' ? 'الرئيسية' : 'Home');
+    if (breadcrumbArticles) breadcrumbArticles.textContent = data.nav.articles || (langCode === 'ar' ? 'المقالات' : 'Articles');
+    if (breadcrumbCurrent) breadcrumbCurrent.textContent = artTitle;
+
+    const badge = document.getElementById('article-category-badge');
+    const dateElem = document.getElementById('article-date');
+    const readTimeElem = document.getElementById('article-readtime');
+    const mainTitle = document.getElementById('article-main-title');
+    const mainDesc = document.getElementById('article-main-desc');
+    const tagsElem = document.getElementById('article-tags');
+
+    if (badge) {
+      badge.textContent = catTitle;
+      badge.style.setProperty('--cat-color', catColor);
+      removeSkeleton(badge);
+    }
+    if (dateElem) {
+      dateElem.textContent = getRelativeTimeString(targetArticle.date, langCode);
+      removeSkeleton(dateElem);
+    }
+    if (readTimeElem) {
+      readTimeElem.textContent = `• ${readTime}`;
+      removeSkeleton(readTimeElem);
+    }
+    if (mainTitle) {
+      mainTitle.textContent = artTitle;
+      removeSkeleton(mainTitle);
+    }
+    if (mainDesc) {
+      mainDesc.textContent = artDesc;
+      removeSkeleton(mainDesc);
+    }
+    if (tagsElem && Array.isArray(targetArticle.tags)) {
+      tagsElem.innerHTML = targetArticle.tags.map(t => `<span class="tag">${t}</span>`).join('');
+    }
+
+    const backBtnText = document.getElementById('article-back-text');
+    const copyBtnText = document.getElementById('article-copy-text');
+    const copyLinkBtn = document.getElementById('article-copy-link-btn');
+
+    if (backBtnText) backBtnText.textContent = data.articles && data.articles.backToArticles ? data.articles.backToArticles : (langCode === 'ar' ? 'العودة إلى المقالات' : 'Back to Articles');
+    if (copyBtnText) copyBtnText.textContent = data.articles && data.articles.copyLink ? data.articles.copyLink : (langCode === 'ar' ? 'نسخ الرابط' : 'Copy Link');
+
+    if (copyLinkBtn) {
+      copyLinkBtn.onclick = () => {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          if (copyBtnText) {
+            copyBtnText.textContent = data.articles && data.articles.linkCopied ? data.articles.linkCopied : (langCode === 'ar' ? 'تم نسخ الرابط!' : 'Link Copied!');
+            setTimeout(() => {
+              copyBtnText.textContent = data.articles && data.articles.copyLink ? data.articles.copyLink : (langCode === 'ar' ? 'نسخ الرابط' : 'Copy Link');
+            }, 2500);
+          }
+        });
+      };
+    }
+
+    window.addEventListener('scroll', () => {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPos = window.scrollY;
+      const progress = docHeight > 0 ? (scrollPos / docHeight) * 100 : 0;
+      const progressBar = document.getElementById('reading-progress-bar');
+      if (progressBar) progressBar.style.width = `${progress}%`;
+    });
+
+    const contentElem = document.getElementById('article-content');
+    if (contentElem) {
+      let mdText = '';
+      try {
+        const mdRes = await fetch(`articles/${targetCategory.folder}/${targetArticle.file}`);
+        if (mdRes.ok) {
+          mdText = await mdRes.text();
+        }
+      } catch (fetchErr) {
+        // Fetch restricted on file:// or offline
+      }
+
+      // Offline / file:// protocol fallback
+      if (!mdText && window.I18N_DATA && window.I18N_DATA.articleContents) {
+        const key = `${targetCategory.folder}/${targetArticle.file}`;
+        mdText = window.I18N_DATA.articleContents[key] || window.I18N_DATA.articleContents[targetArticle.slug] || '';
+      }
+
+      if (mdText) {
+        contentElem.innerHTML = parseMarkdown(mdText);
+        if (typeof window.Prism !== "undefined" && typeof window.Prism.highlightAllUnder === "function") {
+          window.Prism.highlightAllUnder(contentElem);
+        }
+        enhanceMarkdownCodeBlocks(contentElem);
+        enhanceMarkdownTables(contentElem);
+      } else {
+        console.error('[Portfolio] Failed to load markdown article');
+        contentElem.innerHTML = `
+          <div class="article-error-state" style="padding: 2rem; text-align: center; color: var(--muted-foreground);">
+            <p>${langCode === 'ar' ? 'تعذر تحميل ملف المقال. يرجى التأكد من تشغيل الموقع عبر خادم محلي.' : 'Could not load article markdown file. Please ensure the site is served via a web server.'}</p>
+          </div>
+        `;
+      }
+    }
+  }
+
+  
+  // --- Feature Toggles Engine (Enable/Disable sections from config.json) ---
+  function applyFeatureToggles(features) {
+    if (!features || typeof features !== 'object') return;
+
+    const featureMappings = {
+      skills: { section: '#skills', nav: '#nav-skills' },
+      projects: { section: '#projects', nav: '#nav-projects' },
+      articles: { nav: '#nav-articles', bnav: '#bottom-nav-bar [data-page="articles"]' },
+      books: { nav: '#nav-books', bnav: '#bottom-nav-bar [data-page="books"]' },
+      testimonials: { section: '#testimonials', nav: '#nav-testimonials' },
+      contact: { section: '#contact', nav: '#nav-contact' }
+    };
+
+    Object.keys(featureMappings).forEach(feat => {
+      const isEnabled = features[feat] !== false;
+      const mapping = featureMappings[feat];
+
+      if (mapping.section) {
+        const secElem = document.querySelector(mapping.section);
+        if (secElem) secElem.style.display = isEnabled ? '' : 'none';
+      }
+      if (mapping.nav) {
+        const navElem = document.querySelector(mapping.nav);
+        if (navElem) navElem.style.display = isEnabled ? '' : 'none';
+      }
+      if (mapping.bnav) {
+        const bnavElem = document.querySelector(mapping.bnav);
+        if (bnavElem) bnavElem.style.display = isEnabled ? "" : "none";
+      }
+
+      if (feat === "articles" && !isEnabled && window.location.pathname.includes("article")) {
+        const mainElem = document.querySelector("main");
+        if (mainElem) {
+          mainElem.innerHTML = `<div class="container" style="text-align: center; padding: 6rem 1rem;"><p style="font-size: 1.25rem; color: var(--muted-foreground); margin-bottom: 1.5rem;">${document.documentElement.lang === "ar" ? "هذا القسم غير مفعل حالياً في الإعدادات." : "This section is currently disabled."}</p><a href="index.html" class="btn btn-primary">${document.documentElement.lang === "ar" ? "العودة إلى الرئيسية" : "Return Home"}</a></div>`;
+        }
+      }
+      if (feat === "books" && !isEnabled && window.location.pathname.includes("books")) {
+        const mainElem = document.querySelector("main");
+        if (mainElem) {
+          mainElem.innerHTML = `<div class="container" style="text-align: center; padding: 6rem 1rem;"><p style="font-size: 1.25rem; color: var(--muted-foreground); margin-bottom: 1.5rem;">${document.documentElement.lang === "ar" ? "هذا القسم غير مفعل حالياً في الإعدادات." : "This section is currently disabled."}</p><a href="index.html" class="btn btn-primary">${document.documentElement.lang === "ar" ? "العودة إلى الرئيسية" : "Return Home"}</a></div>`;
+        }
+      }
+    });
+  }
+
   // --- Profile Rendering Engine ---
   function renderProfile(langCode) {
     const langConfig = appConfig.languages.find(l => l.code === langCode) || appConfig.languages[0];
@@ -268,10 +629,12 @@
     }
 
     // 2. Navigation
+    applyFeatureToggles(appConfig.features);
     const navBrand = document.getElementById('nav-brand');
     const navHome = document.getElementById('nav-home');
     const navSkills = document.getElementById('nav-skills');
     const navProjects = document.getElementById('nav-projects');
+    const navArticles = document.getElementById('nav-articles');
     const navBooks = document.getElementById('nav-books');
     const navTestimonials = document.getElementById('nav-testimonials');
     const navContact = document.getElementById('nav-contact');
@@ -295,6 +658,10 @@
       navProjects.textContent = data.nav.projects;
       removeSkeleton(navProjects);
     }
+    if (navArticles) {
+      navArticles.textContent = data.nav.articles || (langCode === 'ar' ? 'المقالات' : 'Articles');
+      removeSkeleton(navArticles);
+    }
     if (navBooks) {
       navBooks.textContent = data.nav.books || (langCode === 'ar' ? 'الكتب' : 'Books');
       removeSkeleton(navBooks);
@@ -307,6 +674,23 @@
       navContact.textContent = data.nav.contact;
       removeSkeleton(navContact);
     }
+
+    // Mobile Bottom Navigation Bar Labels & Active Indicator
+    const bnavHome = document.getElementById('bnav-home');
+    const bnavArticles = document.getElementById('bnav-articles');
+    const bnavBooks = document.getElementById('bnav-books');
+    if (bnavHome) bnavHome.textContent = data.nav.home || (langCode === 'ar' ? 'الرئيسية' : 'Home');
+    if (bnavArticles) bnavArticles.textContent = data.nav.articles || (langCode === 'ar' ? 'المقالات' : 'Articles');
+    if (bnavBooks) bnavBooks.textContent = data.nav.books || (langCode === 'ar' ? 'الكتب' : 'Books');
+
+    const currentPath = window.location.pathname;
+    document.querySelectorAll('.bottom-nav-item').forEach(item => {
+      const page = item.getAttribute('data-page');
+      const isHome = (page === 'home' && (currentPath.endsWith('index.html') || currentPath.endsWith('/') || currentPath === ''));
+      const isArticles = (page === 'articles' && (currentPath.includes('article')));
+      const isBooks = (page === 'books' && currentPath.includes('books'));
+      item.classList.toggle('active', isHome || isArticles || isBooks);
+    });
 
     // Active Language Label on the Dropdown Button
     if (currentLangText) {
@@ -347,13 +731,13 @@
     }
 
     // 3. Hero Section (Index Page)
-    const heroBadgeText = document.getElementById('hero-badge-text');
+    const heroBadgeText = document.getElementById('hero-badge-text') || document.getElementById('hero-badge');
     const heroTitle = document.getElementById('hero-title');
     const heroSubtitle = document.getElementById('hero-subtitle');
     const heroDesc = document.getElementById('hero-desc');
     const heroViewWork = document.getElementById('hero-view-work');
     const heroGetInTouch = document.getElementById('hero-get-in-touch');
-    const heroImg = document.getElementById('hero-img');
+    const heroImg = document.getElementById('hero-img') || document.getElementById('hero-avatar');
 
     if (heroBadgeText) {
       heroBadgeText.textContent = data.hero.badge;
@@ -584,7 +968,127 @@
       filterBooks();
     }
 
-    // 9. Contact Section
+    // 10. Dedicated Articles Page (articles.html)
+    const articlesPageTitle = document.getElementById('articles-page-title');
+    const articlesPageDesc = document.getElementById('articles-page-desc');
+    const categoriesShowcase = document.getElementById('categories-showcase');
+    const articlesCategoryFilters = document.getElementById('articles-category-filters');
+    const articlesWrapper = document.getElementById('articles-wrapper');
+
+    if (articlesPageTitle) {
+      articlesPageTitle.textContent = data.articles ? data.articles.title : (langCode === 'ar' ? 'المقالات والأبحاث التقنية' : 'Technical Articles');
+      removeSkeleton(articlesPageTitle);
+    }
+    if (articlesPageDesc) {
+      articlesPageDesc.textContent = data.articles ? data.articles.description : '';
+      removeSkeleton(articlesPageDesc);
+    }
+
+    if (articlesWrapper) {
+      if (!articlesData || !articlesData.categories || articlesData.categories.length === 0) {
+        if (window.I18N_DATA && window.I18N_DATA.articles) {
+          articlesData = window.I18N_DATA.articles;
+        }
+      }
+      if (articlesData && Array.isArray(articlesData.categories)) {
+        const allCategories = articlesData.categories;
+      const countLabel = data.articles && data.articles.articleCount ? data.articles.articleCount : (langCode === 'ar' ? 'مقالات' : 'Articles');
+      const allLabel = data.articles && data.articles.allCategories ? data.articles.allCategories : (langCode === 'ar' ? 'جميع التصنيفات' : 'All Categories');
+
+      // Category Filter Chips (UX Optimized)
+      const activeCategoryInfo = document.getElementById('active-category-info');
+      const activeCategoryDesc = document.getElementById('active-category-desc');
+
+      if (articlesCategoryFilters) {
+        let totalCount = 0;
+        allCategories.forEach(c => { totalCount += (c.articles || []).length; });
+
+        const filterItems = [
+          { folder: 'all', title: allLabel, count: totalCount, icon: 'layers', color: 'var(--primary)', desc: '' },
+          ...allCategories.map(c => ({
+            folder: c.folder,
+            title: typeof c.title === 'object' ? (c.title[langCode] || c.title.ar || c.title.en) : c.title,
+            count: (c.articles || []).length,
+            icon: c.icon,
+            color: c.color || '#3b82f6',
+            desc: typeof c.description === 'object' ? (c.description[langCode] || c.description.ar || c.description.en) : c.description
+          }))
+        ];
+
+        articlesCategoryFilters.innerHTML = filterItems.map(f => {
+          const isActive = f.folder === currentArticlesFilter ? 'active' : '';
+          const iconSvg = ICONS[f.icon] || ICONS.code;
+          return `
+            <button class="category-chip ${isActive}" data-category="${f.folder}" style="--cat-color: ${f.color};">
+              <span class="chip-icon">${iconSvg}</span>
+              <span class="chip-title">${f.title}</span>
+              <span class="chip-count">${f.count}</span>
+            </button>
+          `;
+        }).join('');
+
+        articlesCategoryFilters.querySelectorAll('.category-chip').forEach(btn => {
+          btn.onclick = () => {
+            currentArticlesFilter = btn.getAttribute('data-category');
+            updateArticlesView();
+          };
+        });
+      }
+
+      function updateArticlesView() {
+        if (articlesCategoryFilters) {
+          articlesCategoryFilters.querySelectorAll('.category-chip').forEach(b => {
+            b.classList.toggle('active', b.getAttribute('data-category') === currentArticlesFilter);
+          });
+        }
+
+        // Show description of selected category if not 'all'
+        if (activeCategoryInfo && activeCategoryDesc) {
+          if (currentArticlesFilter !== 'all') {
+            const selCat = allCategories.find(c => c.folder === currentArticlesFilter);
+            if (selCat) {
+              const d = typeof selCat.description === 'object' ? (selCat.description[langCode] || selCat.description.ar || selCat.description.en) : selCat.description;
+              activeCategoryDesc.textContent = d;
+              activeCategoryInfo.style.display = 'block';
+            } else {
+              activeCategoryInfo.style.display = 'none';
+            }
+          } else {
+            activeCategoryInfo.style.display = 'none';
+          }
+        }
+
+        const filteredList = [];
+        allCategories.forEach(cat => {
+          if (currentArticlesFilter === 'all' || cat.folder === currentArticlesFilter) {
+            (cat.articles || []).forEach(art => {
+              filteredList.push({ article: art, category: cat });
+            });
+          }
+        });
+        filteredList.sort((a, b) => new Date(b.article.date) - new Date(a.article.date));
+
+        articlesWrapper.innerHTML = filteredList.length > 0
+          ? filteredList.map(item => renderArticleCardHtml(item.article, item.category, data, langCode)).join('')
+          : `<p class="text-muted" style="grid-column: 1 / -1; text-align: center; padding: 2rem;">${langCode === 'ar' ? 'لا توجد مقالات في هذا التصنيف حالياً.' : 'No articles in this category yet.'}</p>`;
+      }
+
+      updateArticlesView();
+    }
+  }
+
+    // 11. Dedicated Article Reader Page (article.html)
+    const articleContentElem = document.getElementById('article-content');
+    if (articleContentElem) {
+      if (!articlesData || !articlesData.categories || articlesData.categories.length === 0) {
+        if (window.I18N_DATA && window.I18N_DATA.articles) {
+          articlesData = window.I18N_DATA.articles;
+        }
+      }
+      renderArticleReader(langCode, data);
+    }
+
+    // 12. Contact Section
     const contactTitle = document.getElementById('contact-title');
     const contactDesc = document.getElementById('contact-desc');
     const contactEmailBtn = document.getElementById('contact-email-btn');
@@ -802,16 +1306,28 @@
 
   // --- Bootstrapping ---
   async function loadDataAndInit() {
-    // 1. Try loading config.json & shared.json dynamically if on server
+    // 1. Try loading config.json, shared.json, & articles/categories.json dynamically if on server
     try {
-      const [configRes, sharedRes] = await Promise.all([
-        fetch('data/config.json'),
-        fetch('data/shared.json')
-      ]);
-      if (configRes.ok) appConfig = await configRes.json();
-      if (sharedRes.ok) sharedData = await sharedRes.json();
-    } catch (e) {
-      // Use fallback config and shared if fetch is restricted
+      const configRes = await fetch('data/config.json').catch(() => null);
+      if (configRes && configRes.ok) appConfig = await configRes.json();
+    } catch (_) {}
+
+    try {
+      const sharedRes = await fetch('data/shared.json').catch(() => null);
+      if (sharedRes && sharedRes.ok) sharedData = await sharedRes.json();
+    } catch (_) {}
+
+    try {
+      const articlesRes = await fetch('articles/categories.json').catch(() => null);
+      if (articlesRes && articlesRes.ok) {
+        articlesData = await articlesRes.json();
+      } else if (window.I18N_DATA && window.I18N_DATA.articles) {
+        articlesData = window.I18N_DATA.articles;
+      }
+    } catch (_) {
+      if (window.I18N_DATA && window.I18N_DATA.articles) {
+        articlesData = window.I18N_DATA.articles;
+      }
     }
 
     initTheme();
