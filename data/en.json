@@ -1,0 +1,115 @@
+{
+  "meta": {
+    "title": "Asem Abdullah Najee | Portfolio",
+    "description": "Asem Abdullah Najee - Software Engineering Student & Full-Stack Developer Portfolio"
+  },
+  "nav": {
+    "brand": "Asem",
+    "skills": "Skills",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "hero": {
+    "badge": "Welcome to my portfolio",
+    "title": "Asem Abdullah Najee",
+    "subtitle": "Software Engineering Student",
+    "description": "Passionate software engineer building modern web and mobile applications. Currently studying at Taiz University, with expertise in full-stack development, cloud technologies, and innovative problem-solving.",
+    "viewWork": "View My Work",
+    "getInTouch": "Get in Touch"
+  },
+  "skills": {
+    "title": "Technical Skills",
+    "description": "A comprehensive toolkit of technologies and tools I use to build scalable, efficient, and user-friendly applications.",
+    "categories": [
+      {
+        "id": "backend",
+        "title": "Backend & API",
+        "icon": "code",
+        "items": ["Java", "Spring Boot", "PHP", "Laravel", "Express.js"]
+      },
+      {
+        "id": "frontend",
+        "title": "Frontend & Mobile",
+        "icon": "smartphone",
+        "items": ["React.js", "Next.js", "TypeScript", "Flutter", "Dart"]
+      },
+      {
+        "id": "databases",
+        "title": "Databases",
+        "icon": "database",
+        "items": ["MySQL", "MongoDB", "SQLite", "Supabase", "Redis", "Firebase"]
+      },
+      {
+        "id": "design",
+        "title": "Design & Styling",
+        "icon": "palette",
+        "items": ["Tailwind CSS", "Figma"]
+      },
+      {
+        "id": "tools",
+        "title": "Tools & DevOps",
+        "icon": "terminal",
+        "items": ["Git", "GitHub", "Docker", "Jira", "Postman", "Linux"]
+      },
+      {
+        "id": "documentation",
+        "title": "Documentation",
+        "icon": "file-text",
+        "items": ["Markdown", "Technical Writing"]
+      }
+    ]
+  },
+  "projects": {
+    "title": "Featured Projects",
+    "description": "Showcasing my best work across web development, mobile apps, and backend systems.",
+    "viewGithub": "View on GitHub",
+    "items": [
+      {
+        "id": "student-api",
+        "title": "Student Management API",
+        "description": "Comprehensive REST API for managing students, subjects, and teachers. Built with Spring Boot following MVC architecture, featuring CRUD operations and validation annotations.",
+        "tags": ["Java", "Spring Boot", "MySQL", "MVC"],
+        "github": "https://github.com/Asemnajee/student-management-api",
+        "icon": "code",
+        "image": ""
+      },
+      {
+        "id": "flutter-shop",
+        "title": "Flutter Shopping Application",
+        "description": "Full-featured e-commerce mobile application with product browsing, cart management, favorites, and user profiles. Demonstrates modern Flutter development practices.",
+        "tags": ["Dart", "Flutter", "State Management", "E-commerce"],
+        "github": "https://github.com/Asemnajee/flutter-shopping-application",
+        "icon": "smartphone",
+        "image": ""
+      },
+      {
+        "id": "javabase-orm",
+        "title": "JavaBase ORM Library",
+        "description": "Custom ORM library for Java applications that simplifies database interactions with MySQL and SQLite. Inspired by Laravel's Eloquent, featuring migrations and model management.",
+        "tags": ["Java", "ORM", "MySQL", "SQLite", "Database"],
+        "github": "https://github.com/AsemNajee/JavaBase",
+        "icon": "database",
+        "image": ""
+      },
+      {
+        "id": "ftm-website",
+        "title": "FTM Institute Website",
+        "description": "Modern website for Future Technologies Institute built with Next.js. Showcases institute programs and provides contact information with responsive design.",
+        "tags": ["JavaScript", "Next.js", "React", "Responsive Design"],
+        "github": "https://github.com/AsemNajee/FTM",
+        "icon": "terminal",
+        "image": ""
+      }
+    ]
+  },
+  "contact": {
+    "title": "Let's Work Together",
+    "description": "I'm always interested in hearing about new projects and opportunities. Feel free to reach out!",
+    "sendEmail": "Send me an email",
+    "visitGithub": "Visit my GitHub"
+  },
+  "footer": {
+    "copyright": "All rights reserved."
+  }
+}
+

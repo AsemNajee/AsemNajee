@@ -1,0 +1,115 @@
+{
+  "meta": {
+    "title": "عاصم عبدالله ناجي | معرض الأعمال والملف الشخصي",
+    "description": "عاصم عبدالله ناجي - طالب هندسة برمجيات ومطور برمجيات متكامل"
+  },
+  "nav": {
+    "brand": "عاصم",
+    "skills": "المهارات",
+    "projects": "المشاريع",
+    "contact": "تواصل معي"
+  },
+  "hero": {
+    "badge": "مرحباً بك في ملفي الشخصي",
+    "title": "عاصم عبدالله ناجي",
+    "subtitle": "طالب هندسة برمجيات ومطور برمجيات",
+    "description": "مهندس برمجيات شغوف ببناء تطبيقات الويب والموبايل الحديثة. أدرس حالياً في جامعة تعز، مع خبرة عملية في تطوير الواجهات والخلفيات البرمجية، والتقنيات السحابية، والحلول البرمجية المبتكرة.",
+    "viewWork": "استعرض أعمالي",
+    "getInTouch": "تواصل معي"
+  },
+  "skills": {
+    "title": "المهارات التقنية",
+    "description": "مجموعة متكاملة من التقنيات والأدوات التي أعتمد عليها في بناء تطبيقات قابلة للتوسع، عالية الكفاءة وسهلة الاستخدام.",
+    "categories": [
+      {
+        "id": "backend",
+        "title": "الواجهات الخلفية والـ API",
+        "icon": "code",
+        "items": ["Java", "Spring Boot", "PHP", "Laravel", "Express.js"]
+      },
+      {
+        "id": "frontend",
+        "title": "الواجهات الأمامية والموبايل",
+        "icon": "smartphone",
+        "items": ["React.js", "Next.js", "TypeScript", "Flutter", "Dart"]
+      },
+      {
+        "id": "databases",
+        "title": "قواعد البيانات",
+        "icon": "database",
+        "items": ["MySQL", "MongoDB", "SQLite", "Supabase", "Redis", "Firebase"]
+      },
+      {
+        "id": "design",
+        "title": "التصميم وتجربة المستخدم",
+        "icon": "palette",
+        "items": ["Tailwind CSS", "Figma"]
+      },
+      {
+        "id": "tools",
+        "title": "الأدوات والـ DevOps",
+        "icon": "terminal",
+        "items": ["Git", "GitHub", "Docker", "Jira", "Postman", "Linux"]
+      },
+      {
+        "id": "documentation",
+        "title": "التوثيق والكتابة التقنية",
+        "icon": "file-text",
+        "items": ["Markdown", "الكتابة التقنية"]
+      }
+    ]
+  },
+  "projects": {
+    "title": "المشاريع المميزة",
+    "description": "استعراض لأبرز المشاريع التي قمت بتطويرها في مجالات الويب، تطبيقات الموبايل والأنظمة الخلفية.",
+    "viewGithub": "عرض على GitHub",
+    "items": [
+      {
+        "id": "student-api",
+        "title": "Student Management API",
+        "description": "واجهة برمجة تطبيقات REST شاملة لإدارة الطلاب والمواد والمعلمين. مبنية باستخدام Spring Boot وفق معمارية MVC مع دعم كامل لعمليات CRUD والتحقق من صحة البيانات.",
+        "tags": ["Java", "Spring Boot", "MySQL", "MVC"],
+        "github": "https://github.com/Asemnajee/student-management-api",
+        "icon": "code",
+        "image": ""
+      },
+      {
+        "id": "flutter-shop",
+        "title": "تطبيق متجر إلكتروني (Flutter)",
+        "description": "تطبيق متجر إلكتروني متكامل للهواتف الذكية مع ميزات تصفح المنتجات، إدارة السلة والمفضلة، وحسابات المستخدمين وفق أحدث معايير فلاتر.",
+        "tags": ["Dart", "Flutter", "إدارة الحالة", "تجارة إلكترونية"],
+        "github": "https://github.com/Asemnajee/flutter-shopping-application",
+        "icon": "smartphone",
+        "image": ""
+      },
+      {
+        "id": "javabase-orm",
+        "title": "مكتبة JavaBase ORM",
+        "description": "مكتبة ORM مخصصة لتطبيقات جافا تسهل التعامل مع قواعد بيانات MySQL و SQLite، مستوحاة من Eloquent في Laravel وتدعم التهجير (Migrations) وإدارة النماذج.",
+        "tags": ["Java", "ORM", "MySQL", "SQLite", "قواعد بيانات"],
+        "github": "https://github.com/AsemNajee/JavaBase",
+        "icon": "database",
+        "image": ""
+      },
+      {
+        "id": "ftm-website",
+        "title": "موقع معهد تقنيات المستقبل (FTM)",
+        "description": "موقع تعريفي حديث لمعهد تقنيات المستقبل مبني باستخدام Next.js و React لعرض برامج المعهد وتسهيل التواصل بتصميم متجاوب بالكامل.",
+        "tags": ["JavaScript", "Next.js", "React", "تصميم متجاوب"],
+        "github": "https://github.com/AsemNajee/FTM",
+        "icon": "terminal",
+        "image": ""
+      }
+    ]
+  },
+  "contact": {
+    "title": "دعنا نعمل معاً",
+    "description": "أنا مهتم دائماً بسماع الأفكار والمشاريع الجديدة والفرص الواعدة. لا تتردد في التواصل معي!",
+    "sendEmail": "راسلني عبر البريد",
+    "visitGithub": "زيارة حسابي على GitHub"
+  },
+  "footer": {
+    "copyright": "جميع الحقوق محفوظة."
+  }
+}
+
