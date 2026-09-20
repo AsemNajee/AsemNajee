@@ -127,7 +127,9 @@
       element.style.minWidth = '';
       element.style.height = '';
       element.style.minHeight = '';
-      element.style.display = '';
+      if (element.style.display !== 'none') {
+        element.style.display = '';
+      }
     }
   }
 
@@ -574,7 +576,7 @@
     const featureMappings = {
       skills: { section: '#skills', nav: '#nav-skills' },
       projects: { section: '#projects', nav: '#nav-projects' },
-      articles: { nav: '#nav-articles', bnav: '#bottom-nav-bar [data-page="articles"]' },
+      articles: { section: '#articles', nav: '#nav-articles', bnav: '#bottom-nav-bar [data-page="articles"]' },
       books: { nav: '#nav-books', bnav: '#bottom-nav-bar [data-page="books"]' },
       testimonials: { section: '#testimonials', nav: '#nav-testimonials' },
       contact: { section: '#contact', nav: '#nav-contact' }
@@ -827,6 +829,45 @@
     if (projectsViewAll) {
       projectsViewAll.textContent = data.projects.viewAll || (langCode === 'ar' ? 'عرض جميع المشاريع' : 'View All Projects');
       removeSkeleton(projectsViewAll);
+    }
+
+    // 5b. Articles Section (Index Page: Shows first 3 articles only)
+    const homeArticlesTitle = document.getElementById('articles-title');
+    const homeArticlesDesc = document.getElementById('articles-desc');
+    const homeArticlesWrapper = document.getElementById('home-articles-wrapper');
+    const homeArticlesViewAll = document.getElementById('articles-view-all');
+
+    if (homeArticlesTitle) {
+      homeArticlesTitle.textContent = data.articles ? data.articles.title : (langCode === 'ar' ? 'أحدث المقالات التقنية' : 'Latest Articles');
+      removeSkeleton(homeArticlesTitle);
+    }
+    if (homeArticlesDesc) {
+      homeArticlesDesc.textContent = data.articles ? data.articles.description : '';
+      removeSkeleton(homeArticlesDesc);
+    }
+
+    if (homeArticlesWrapper) {
+      if (!articlesData || !articlesData.categories || articlesData.categories.length === 0) {
+        if (window.I18N_DATA && window.I18N_DATA.articles) {
+          articlesData = window.I18N_DATA.articles;
+        }
+      }
+      if (articlesData && Array.isArray(articlesData.categories)) {
+        const allArticlesList = [];
+        articlesData.categories.forEach(cat => {
+          (cat.articles || []).forEach(art => {
+            allArticlesList.push({ article: art, category: cat });
+          });
+        });
+        allArticlesList.sort((a, b) => new Date(b.article.date) - new Date(a.article.date));
+        const topArticles = allArticlesList.slice(0, 3);
+        homeArticlesWrapper.innerHTML = topArticles.map(item => renderArticleCardHtml(item.article, item.category, data, langCode)).join('');
+      }
+    }
+
+    if (homeArticlesViewAll) {
+      homeArticlesViewAll.textContent = data.articles && data.articles.allCategories ? (langCode === 'ar' ? 'عرض جميع المقالات' : 'View All Articles') : (langCode === 'ar' ? 'عرض جميع المقالات' : 'View All Articles');
+      removeSkeleton(homeArticlesViewAll);
     }
 
     // 6. Testimonials Section (Index Page: Rendered without translations from sharedData)
@@ -1135,7 +1176,8 @@
       currentYearElem.textContent = new Date().getFullYear();
     }
 
-    // 11. Re-observe sections for scroll active state
+    // 11. Apply Feature Toggles & Re-observe sections for scroll active state
+    applyFeatureToggles(appConfig.features);
     setupScrollObserver();
   }
 
