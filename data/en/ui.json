@@ -1,0 +1,60 @@
+{
+  "nav": {
+    "brand": "Asem",
+    "home": "Home",
+    "articles": "Articles",
+    "books": "Books",
+    "skills": "Skills",
+    "projects": "Projects",
+    "testimonials": "Testimonials",
+    "contact": "Contact"
+  },
+  "hero": {
+    "badge": "Welcome to my portfolio",
+    "viewWork": "View My Work",
+    "getInTouch": "Get in Touch"
+  },
+  "skills": {
+    "title": "Technical Skills",
+    "description": "A comprehensive toolkit of technologies and tools I use to build scalable, efficient, and user-friendly applications."
+  },
+  "projects": {
+    "title": "Featured Projects",
+    "description": "Showcasing my best work across web development, mobile apps, and backend systems.",
+    "viewGithub": "View on GitHub",
+    "liveDemo": "Live Demo",
+    "viewAll": "View All Projects",
+    "allCategories": "All Projects"
+  },
+  "books": {
+    "title": "Technical Books & Publications",
+    "description": "A collection of software engineering and tech books in PDF format authored to share knowledge with the developer community.",
+    "allCategories": "All Categories",
+    "readPdf": "Read Book",
+    "downloadPdf": "Download PDF",
+    "pages": "Pages"
+  },
+  "articles": {
+    "title": "Technical Articles & Research",
+    "description": "In-depth engineering tutorials, best practices, and architecture guides across web, mobile, and software engineering.",
+    "allCategories": "All Categories",
+    "articleCount": "Articles",
+    "readMore": "Read Article",
+    "backToArticles": "Back to Articles",
+    "copyLink": "Copy Link",
+    "linkCopied": "Link Copied!"
+  },
+  "testimonials": {
+    "title": "Testimonials & Endorsements",
+    "description": "Recommendations and feedback from clients and collaborators I've worked with."
+  },
+  "contact": {
+    "title": "Let's Work Together",
+    "sendEmail": "Send me an email",
+    "visitGithub": "Visit my GitHub"
+  },
+  "footer": {
+    "copyright": "All rights reserved."
+  }
+}
+

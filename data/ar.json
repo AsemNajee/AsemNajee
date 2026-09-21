@@ -6,20 +6,20 @@
   "nav": {
     "brand": "عاصم",
     "home": "الرئيسية",
-    "skills": "المهارات",
-    "projects": "المشاريع",
     "articles": "المقالات",
     "books": "الكتب",
+    "skills": "المهارات",
+    "projects": "المشاريع",
     "testimonials": "التوصيات",
     "contact": "تواصل معي"
   },
   "hero": {
     "badge": "مرحباً بك في ملفي الشخصي",
+    "viewWork": "استعرض أعمالي",
+    "getInTouch": "تواصل معي",
     "title": "عاصم عبدالله ناجي",
     "subtitle": "طالب هندسة برمجيات ومطور برمجيات",
-    "description": "مهندس برمجيات شغوف ببناء تطبيقات الويب والموبايل الحديثة. أدرس حالياً في جامعة تعز، مع خبرة عملية في تطوير الواجهات والخلفيات البرمجية، والتقنيات السحابية، والحلول البرمجية المبتكرة.",
-    "viewWork": "استعرض أعمالي",
-    "getInTouch": "تواصل معي"
+    "description": "مهندس برمجيات شغوف ببناء تطبيقات الويب والموبايل الحديثة. أدرس حالياً في جامعة تعز، مع خبرة عملية في تطوير الواجهات والخلفيات البرمجية، والتقنيات السحابية، والحلول البرمجية المبتكرة."
   },
   "skills": {
     "title": "المهارات التقنية",
@@ -29,37 +29,69 @@
         "id": "backend",
         "title": "الواجهات الخلفية والـ API",
         "icon": "code",
-        "items": ["Java", "Spring Boot", "PHP", "Laravel", "Express.js"]
+        "items": [
+          "Java",
+          "Spring Boot",
+          "PHP",
+          "Laravel",
+          "Express.js"
+        ]
       },
       {
         "id": "frontend",
         "title": "الواجهات الأمامية والموبايل",
         "icon": "smartphone",
-        "items": ["React.js", "Next.js", "TypeScript", "Flutter", "Dart"]
+        "items": [
+          "React.js",
+          "Next.js",
+          "TypeScript",
+          "Flutter",
+          "Dart"
+        ]
       },
       {
         "id": "databases",
         "title": "قواعد البيانات",
         "icon": "database",
-        "items": ["MySQL", "MongoDB", "SQLite", "Supabase", "Redis", "Firebase"]
+        "items": [
+          "MySQL",
+          "MongoDB",
+          "SQLite",
+          "Supabase",
+          "Redis",
+          "Firebase"
+        ]
       },
       {
         "id": "design",
         "title": "التصميم وتجربة المستخدم",
         "icon": "palette",
-        "items": ["Tailwind CSS", "Figma"]
+        "items": [
+          "Tailwind CSS",
+          "Figma"
+        ]
       },
       {
         "id": "tools",
         "title": "الأدوات والـ DevOps",
         "icon": "terminal",
-        "items": ["Git", "GitHub", "Docker", "Jira", "Postman", "Linux"]
+        "items": [
+          "Git",
+          "GitHub",
+          "Docker",
+          "Jira",
+          "Postman",
+          "Linux"
+        ]
       },
       {
         "id": "documentation",
         "title": "التوثيق والكتابة التقنية",
         "icon": "file-text",
-        "items": ["Markdown", "الكتابة التقنية"]
+        "items": [
+          "Markdown",
+          "الكتابة التقنية"
+        ]
       }
     ]
   },
@@ -76,8 +108,14 @@
         "title": "Student Management API",
         "description": "واجهة برمجة تطبيقات REST شاملة لإدارة الطلاب والمواد والمعلمين. مبنية باستخدام Spring Boot وفق معمارية MVC مع دعم كامل لعمليات CRUD والتحقق من صحة البيانات.",
         "category": "الأنظمة الخلفية والـ APIs",
-        "tags": ["Java", "Spring Boot", "MySQL", "MVC"],
+        "tags": [
+          "Java",
+          "Spring Boot",
+          "MySQL",
+          "MVC"
+        ],
         "github": "https://github.com/Asemnajee/student-management-api",
+        "liveUrl": "",
         "icon": "code",
         "image": ""
       },
@@ -86,8 +124,14 @@
         "title": "تطبيق متجر إلكتروني (Flutter)",
         "description": "تطبيق متجر إلكتروني متكامل للهواتف الذكية مع ميزات تصفح المنتجات، إدارة السلة والمفضلة، وحسابات المستخدمين وفق أحدث معايير فلاتر.",
         "category": "تطبيقات الموبايل",
-        "tags": ["Dart", "Flutter", "إدارة الحالة", "تجارة إلكترونية"],
+        "tags": [
+          "Dart",
+          "Flutter",
+          "إدارة الحالة",
+          "تجارة إلكترونية"
+        ],
         "github": "https://github.com/Asemnajee/flutter-shopping-application",
+        "liveUrl": "",
         "icon": "smartphone",
         "image": ""
       },
@@ -96,8 +140,15 @@
         "title": "مكتبة JavaBase ORM",
         "description": "مكتبة ORM مخصصة لتطبيقات جافا تسهل التعامل مع قواعد بيانات MySQL و SQLite، مستوحاة من Eloquent في Laravel وتدعم التهجير (Migrations) وإدارة النماذج.",
         "category": "مكتبات وأدوات",
-        "tags": ["Java", "ORM", "MySQL", "SQLite", "قواعد بيانات"],
+        "tags": [
+          "Java",
+          "ORM",
+          "MySQL",
+          "SQLite",
+          "قواعد بيانات"
+        ],
         "github": "https://github.com/AsemNajee/JavaBase",
+        "liveUrl": "",
         "icon": "database",
         "image": ""
       },
@@ -106,7 +157,12 @@
         "title": "موقع معهد تقنيات المستقبل (FTM)",
         "description": "موقع تعريفي حديث لمعهد تقنيات المستقبل مبني باستخدام Next.js و React لعرض برامج المعهد وتسهيل التواصل بتصميم متجاوب بالكامل.",
         "category": "تطبيقات الويب",
-        "tags": ["JavaScript", "Next.js", "React", "تصميم متجاوب"],
+        "tags": [
+          "JavaScript",
+          "Next.js",
+          "React",
+          "تصميم متجاوب"
+        ],
         "github": "https://github.com/AsemNajee/FTM",
         "liveUrl": "https://ftm-yemen.com",
         "icon": "terminal",
@@ -117,8 +173,13 @@
         "title": "أداة Task Manager CLI",
         "description": "أداة سطر أوامر تفاعلية وخفيفة الوزن لإدارة المهام والمشاريع مع دعم تصدير التقارير والتخزين المحلي السريع.",
         "category": "مكتبات وأدوات",
-        "tags": ["Rust", "CLI", "أدوات المطورين"],
+        "tags": [
+          "Rust",
+          "CLI",
+          "أدوات المطورين"
+        ],
         "github": "https://github.com/Asemnajee",
+        "liveUrl": "",
         "icon": "terminal",
         "image": ""
       },
@@ -127,8 +188,14 @@
         "title": "نظام Personal Finance API",
         "description": "واجهة برمجية RESTful لتتبع الميزانية الشخصية والمصروفات الشهرية مع توثيق تفاعلي عبر Swagger ومصادقة JWT.",
         "category": "الأنظمة الخلفية والـ APIs",
-        "tags": ["Node.js", "Express", "TypeScript", "MongoDB"],
+        "tags": [
+          "Node.js",
+          "Express",
+          "TypeScript",
+          "MongoDB"
+        ],
         "github": "https://github.com/Asemnajee",
+        "liveUrl": "",
         "icon": "database",
         "image": ""
       }
@@ -200,9 +267,9 @@
   },
   "contact": {
     "title": "دعنا نعمل معاً",
-    "description": "أنا مهتم دائماً بسماع الأفكار والمشاريع الجديدة والفرص الواعدة. لا تتردد في التواصل معي!",
     "sendEmail": "راسلني عبر البريد",
-    "visitGithub": "زيارة حسابي على GitHub"
+    "visitGithub": "زيارة حسابي على GitHub",
+    "description": "أنا مهتم دائماً بسماع الأفكار والمشاريع الجديدة والفرص الواعدة. لا تتردد في التواصل معي!"
   },
   "footer": {
     "copyright": "جميع الحقوق محفوظة."

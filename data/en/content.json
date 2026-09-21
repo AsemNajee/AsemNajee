@@ -1,0 +1,163 @@
+{
+  "meta": {
+    "title": "Asem Abdullah Najee | Portfolio",
+    "description": "Asem Abdullah Najee - Software Engineering Student & Full-Stack Developer Portfolio"
+  },
+  "hero": {
+    "title": "Asem Abdullah Najee",
+    "subtitle": "Software Engineering Student",
+    "description": "Passionate software engineer building modern web and mobile applications. Currently studying at Taiz University, with expertise in full-stack development, cloud technologies, and innovative problem-solving."
+  },
+  "skills": [
+    {
+      "id": "backend",
+      "title": "Backend & API",
+      "icon": "code",
+      "items": ["Java", "Spring Boot", "PHP", "Laravel", "Express.js"]
+    },
+    {
+      "id": "frontend",
+      "title": "Frontend & Mobile",
+      "icon": "smartphone",
+      "items": ["React.js", "Next.js", "TypeScript", "Flutter", "Dart"]
+    },
+    {
+      "id": "databases",
+      "title": "Databases",
+      "icon": "database",
+      "items": ["MySQL", "MongoDB", "SQLite", "Supabase", "Redis", "Firebase"]
+    },
+    {
+      "id": "design",
+      "title": "Design & Styling",
+      "icon": "palette",
+      "items": ["Tailwind CSS", "Figma"]
+    },
+    {
+      "id": "tools",
+      "title": "Tools & DevOps",
+      "icon": "terminal",
+      "items": ["Git", "GitHub", "Docker", "Jira", "Postman", "Linux"]
+    },
+    {
+      "id": "documentation",
+      "title": "Documentation",
+      "icon": "file-text",
+      "items": ["Markdown", "Technical Writing"]
+    }
+  ],
+  "projects": [
+    {
+      "id": "student-api",
+      "title": "Student Management API",
+      "description": "Comprehensive REST API for managing students, subjects, and teachers. Built with Spring Boot following MVC architecture, featuring CRUD operations and validation annotations.",
+      "category": "Backend & APIs",
+      "tags": ["Java", "Spring Boot", "MySQL", "MVC"],
+      "github": "https://github.com/Asemnajee/student-management-api",
+      "liveUrl": "",
+      "icon": "code",
+      "image": ""
+    },
+    {
+      "id": "flutter-shop",
+      "title": "Flutter Shopping Application",
+      "description": "Full-featured e-commerce mobile application with product browsing, cart management, favorites, and user profiles. Demonstrates modern Flutter development practices.",
+      "category": "Mobile Applications",
+      "tags": ["Dart", "Flutter", "State Management", "E-commerce"],
+      "github": "https://github.com/Asemnajee/flutter-shopping-application",
+      "liveUrl": "",
+      "icon": "smartphone",
+      "image": ""
+    },
+    {
+      "id": "javabase-orm",
+      "title": "JavaBase ORM Library",
+      "description": "Custom ORM library for Java applications that simplifies database interactions with MySQL and SQLite. Inspired by Laravel's Eloquent, featuring migrations and model management.",
+      "category": "Libraries & Tools",
+      "tags": ["Java", "ORM", "MySQL", "SQLite", "Database"],
+      "github": "https://github.com/AsemNajee/JavaBase",
+      "liveUrl": "",
+      "icon": "database",
+      "image": ""
+    },
+    {
+      "id": "ftm-website",
+      "title": "FTM Institute Website",
+      "description": "Modern website for Future Technologies Institute built with Next.js. Showcases institute programs and provides contact information with responsive design.",
+      "category": "Web Applications",
+      "tags": ["JavaScript", "Next.js", "React", "Responsive Design"],
+      "github": "https://github.com/AsemNajee/FTM",
+      "liveUrl": "https://ftm-yemen.com",
+      "icon": "terminal",
+      "image": ""
+    },
+    {
+      "id": "task-manager-cli",
+      "title": "Task Manager CLI Tool",
+      "description": "Lightweight and interactive command-line tool for managing projects and daily tasks with local storage and report export.",
+      "category": "Libraries & Tools",
+      "tags": ["Rust", "CLI", "Developer Tools"],
+      "github": "https://github.com/Asemnajee",
+      "liveUrl": "",
+      "icon": "terminal",
+      "image": ""
+    },
+    {
+      "id": "finance-tracker-api",
+      "title": "Personal Finance API",
+      "description": "RESTful API system for tracking personal budget and expenses, featuring JWT authentication and Swagger documentation.",
+      "category": "Backend & APIs",
+      "tags": ["Node.js", "Express", "TypeScript", "MongoDB"],
+      "github": "https://github.com/Asemnajee",
+      "liveUrl": "",
+      "icon": "database",
+      "image": ""
+    }
+  ],
+  "books": [
+    {
+      "id": "book-backend-arch",
+      "title": "Modern Backend Architecture Guide",
+      "description": "A comprehensive reference for API design, microservices architecture, and database caching best practices.",
+      "category": "Backend & Software Engineering",
+      "cover": "",
+      "pdfUrl": "#",
+      "pages": 180,
+      "year": 2025
+    },
+    {
+      "id": "book-flutter-mastery",
+      "title": "Mastering Mobile Apps with Flutter",
+      "description": "A hands-on guide covering app development from scratch to production, advanced state management, and secure API integration.",
+      "category": "Mobile Development",
+      "cover": "",
+      "pdfUrl": "#",
+      "pages": 220,
+      "year": 2024
+    },
+    {
+      "id": "book-clean-code-java",
+      "title": "Clean Code Fundamentals in Java",
+      "description": "Practical guide to readable and maintainable code, SOLID principles, and commonly used design patterns in production environments.",
+      "category": "Backend & Software Engineering",
+      "cover": "",
+      "pdfUrl": "#",
+      "pages": 140,
+      "year": 2024
+    },
+    {
+      "id": "book-db-design",
+      "title": "Introduction to Database Design & ORM",
+      "description": "Hands-on explanation of relational database theory, schema design, complex query optimization, and building custom ORM libraries.",
+      "category": "Databases",
+      "cover": "",
+      "pdfUrl": "#",
+      "pages": 160,
+      "year": 2023
+    }
+  ],
+  "contact": {
+    "description": "I'm always interested in hearing about new projects and opportunities. Feel free to reach out!"
+  }
+}
+

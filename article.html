@@ -31,13 +31,18 @@
       <a href="index.html" class="nav-brand skeleton skeleton-text" id="nav-brand"></a>
 
       <nav id="nav-links" class="nav-links">
-        <a href="index.html" class="nav-link skeleton skeleton-text" id="nav-home"></a>
-        <a href="projects.html" class="nav-link skeleton skeleton-text" id="nav-projects"></a>
-        <a href="articles.html" class="nav-link active skeleton skeleton-text" id="nav-articles"></a>
-        <a href="books.html" class="nav-link skeleton skeleton-text" id="nav-books"></a>
-        <a href="index.html#skills" class="nav-link skeleton skeleton-text" id="nav-skills"></a>
-        <a href="index.html#testimonials" class="nav-link skeleton skeleton-text" id="nav-testimonials"></a>
-        <a href="index.html#contact" class="nav-link skeleton skeleton-text" id="nav-contact"></a>
+        <div class="nav-group nav-group-pages" aria-label="الصفحات">
+          <a href="index.html" class="nav-link skeleton skeleton-text" id="nav-home"></a>
+          <a href="articles.html" class="nav-link active skeleton skeleton-text" id="nav-articles"></a>
+          <a href="books.html" class="nav-link skeleton skeleton-text" id="nav-books"></a>
+        </div>
+        <span class="nav-divider" aria-hidden="true"></span>
+        <div class="nav-group nav-group-sections" aria-label="أقسام الصفحة">
+          <a href="index.html#skills" class="nav-link skeleton skeleton-text" id="nav-skills"></a>
+          <a href="projects.html" class="nav-link skeleton skeleton-text" id="nav-projects"></a>
+          <a href="index.html#testimonials" class="nav-link skeleton skeleton-text" id="nav-testimonials"></a>
+          <a href="index.html#contact" class="nav-link skeleton skeleton-text" id="nav-contact"></a>
+        </div>
       </nav>
 
       <div class="nav-controls">
@@ -185,9 +190,10 @@
     </a>
   </nav>
 
-  <!-- Scripts: Syntax Highlighter + Data Fallback + Template Engine -->
-  <script src="js/prism.min.js?v=12"></script>
-  <script src="js/i18n-data.js?v=12"></script>
-  <script src="js/main.js?v=12" defer></script>
+  <!-- Scripts: Syntax Highlighter + Config + Data Fallback + Template Engine -->
+  <script src="js/prism.min.js?v=13"></script>
+  <script src="data/config.js?v=13"></script>
+  <script src="js/i18n-data.js?v=13"></script>
+  <script src="js/main.js?v=13" defer></script>
 </body>
 </html>

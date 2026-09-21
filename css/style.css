@@ -224,7 +224,23 @@ html.dark .navbar {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 0.5rem;
+}
+
+.nav-group {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.nav-divider {
+  display: inline-block;
+  width: 1.5px;
+  height: 1.25rem;
+  background-color: var(--border);
+  margin: 0 0.5rem;
+  border-radius: var(--radius-full);
+  opacity: 0.8;
 }
 
 .nav-link {
@@ -2222,6 +2238,16 @@ html:not(.dark) .book-cover-area {
   }
 
   /* Requirement: Hide the buttons placed in bottomnav from the mobile header menu */
+  .nav-group {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .nav-group-pages,
+  .nav-divider,
   .nav-links #nav-home,
   .nav-links #nav-articles,
   .nav-links #nav-books {

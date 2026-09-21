@@ -78,9 +78,9 @@
     languages: {}
   };
 
-  let appConfig = fallbackI18n.config;
+  let appConfig = (typeof window !== 'undefined' && window.APP_CONFIG) ? window.APP_CONFIG : fallbackI18n.config;
   let sharedData = fallbackI18n.shared;
-  const loadedLanguages = fallbackI18n.languages || {};
+  const loadedLanguages = {};
   let currentLangCode = safeGetStorage('portfolio_lang', appConfig.defaultLanguage || 'ar');
 
   // Filter states
@@ -576,8 +576,8 @@
     const featureMappings = {
       skills: { section: '#skills', nav: '#nav-skills' },
       projects: { section: '#projects', nav: '#nav-projects' },
-      articles: { section: '#articles', nav: '#nav-articles', bnav: '#bottom-nav-bar [data-page="articles"]' },
-      books: { nav: '#nav-books', bnav: '#bottom-nav-bar [data-page="books"]' },
+      articles: { section: '#articles', nav: '#nav-articles', bnav: '#bottom-nav-bar [data-page="articles"], #bnav-articles' },
+      books: { nav: '#nav-books', bnav: '#bottom-nav-bar [data-page="books"], #bnav-books' },
       testimonials: { section: '#testimonials', nav: '#nav-testimonials' },
       contact: { section: '#contact', nav: '#nav-contact' }
     };
@@ -587,16 +587,31 @@
       const mapping = featureMappings[feat];
 
       if (mapping.section) {
-        const secElem = document.querySelector(mapping.section);
-        if (secElem) secElem.style.display = isEnabled ? '' : 'none';
+        document.querySelectorAll(mapping.section).forEach(secElem => {
+          if (!isEnabled) {
+            secElem.style.setProperty('display', 'none', 'important');
+          } else {
+            secElem.style.removeProperty('display');
+          }
+        });
       }
       if (mapping.nav) {
-        const navElem = document.querySelector(mapping.nav);
-        if (navElem) navElem.style.display = isEnabled ? '' : 'none';
+        document.querySelectorAll(mapping.nav).forEach(navElem => {
+          if (!isEnabled) {
+            navElem.style.setProperty('display', 'none', 'important');
+          } else {
+            navElem.style.removeProperty('display');
+          }
+        });
       }
       if (mapping.bnav) {
-        const bnavElem = document.querySelector(mapping.bnav);
-        if (bnavElem) bnavElem.style.display = isEnabled ? "" : "none";
+        document.querySelectorAll(mapping.bnav).forEach(bnavElem => {
+          if (!isEnabled) {
+            bnavElem.style.setProperty('display', 'none', 'important');
+          } else {
+            bnavElem.style.removeProperty('display');
+          }
+        });
       }
 
       if (feat === "articles" && !isEnabled && window.location.pathname.includes("article")) {
@@ -606,6 +621,12 @@
         }
       }
       if (feat === "books" && !isEnabled && window.location.pathname.includes("books")) {
+        const mainElem = document.querySelector("main");
+        if (mainElem) {
+          mainElem.innerHTML = `<div class="container" style="text-align: center; padding: 6rem 1rem;"><p style="font-size: 1.25rem; color: var(--muted-foreground); margin-bottom: 1.5rem;">${document.documentElement.lang === "ar" ? "هذا القسم غير مفعل حالياً في الإعدادات." : "This section is currently disabled."}</p><a href="index.html" class="btn btn-primary">${document.documentElement.lang === "ar" ? "العودة إلى الرئيسية" : "Return Home"}</a></div>`;
+        }
+      }
+      if (feat === "projects" && !isEnabled && window.location.pathname.includes("projects")) {
         const mainElem = document.querySelector("main");
         if (mainElem) {
           mainElem.innerHTML = `<div class="container" style="text-align: center; padding: 6rem 1rem;"><p style="font-size: 1.25rem; color: var(--muted-foreground); margin-bottom: 1.5rem;">${document.documentElement.lang === "ar" ? "هذا القسم غير مفعل حالياً في الإعدادات." : "This section is currently disabled."}</p><a href="index.html" class="btn btn-primary">${document.documentElement.lang === "ar" ? "العودة إلى الرئيسية" : "Return Home"}</a></div>`;
@@ -1181,33 +1202,85 @@
     setupScrollObserver();
   }
 
-  // --- Fetch Language File or Use Inlined Fallback ---
+  // --- Helper to merge UI translations and personal content ---
+  function mergeLanguageData(uiData, contentData) {
+    const ui = uiData || {};
+    const content = contentData || {};
+    return {
+      meta: content.meta || ui.meta || {},
+      nav: ui.nav || {},
+      hero: Object.assign({}, ui.hero, content.hero),
+      skills: {
+        title: (ui.skills && ui.skills.title) || '',
+        description: (ui.skills && ui.skills.description) || '',
+        categories: Array.isArray(content.skills) ? content.skills : ((content.skills && content.skills.categories) || [])
+      },
+      projects: {
+        title: (ui.projects && ui.projects.title) || '',
+        description: (ui.projects && ui.projects.description) || '',
+        viewGithub: (ui.projects && ui.projects.viewGithub) || 'View on GitHub',
+        liveDemo: (ui.projects && ui.projects.liveDemo) || 'Live Demo',
+        viewAll: (ui.projects && ui.projects.viewAll) || 'View All',
+        allCategories: (ui.projects && ui.projects.allCategories) || 'All Projects',
+        items: Array.isArray(content.projects) ? content.projects : ((content.projects && content.projects.items) || [])
+      },
+      books: {
+        title: (ui.books && ui.books.title) || '',
+        description: (ui.books && ui.books.description) || '',
+        allCategories: (ui.books && ui.books.allCategories) || 'All Categories',
+        readPdf: (ui.books && ui.books.readPdf) || 'Read Book',
+        downloadPdf: (ui.books && ui.books.downloadPdf) || 'Download PDF',
+        pages: (ui.books && ui.books.pages) || 'Pages',
+        items: Array.isArray(content.books) ? content.books : ((content.books && content.books.items) || [])
+      },
+      articles: ui.articles || {},
+      testimonials: ui.testimonials || {},
+      contact: Object.assign({}, ui.contact, content.contact),
+      footer: ui.footer || {}
+    };
+  }
+
+  // --- Fetch Language Files (Content + UI) or Use Inlined Fallback ---
   async function loadLanguage(langCode) {
-    // 1. If already loaded in memory, render immediately
     if (loadedLanguages[langCode]) {
       renderProfile(langCode);
       return;
     }
 
-    // 2. Find file path from config
-    const langConfig = appConfig.languages.find(l => l.code === langCode);
-    const filePath = langConfig ? langConfig.file : `data/${langCode}.json`;
-
-    // 3. Attempt fetch
+    // 1. Try loading separate data/{lang}/content.json & data/{lang}/ui.json
     try {
-      const res = await fetch(filePath);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      loadedLanguages[langCode] = data;
-      renderProfile(langCode);
-    } catch (err) {
-      // If fetch fails (e.g. file:// protocol), check window.I18N_DATA
-      if (window.I18N_DATA && window.I18N_DATA.languages && window.I18N_DATA.languages[langCode]) {
-        loadedLanguages[langCode] = window.I18N_DATA.languages[langCode];
+      const [contentRes, uiRes] = await Promise.all([
+        fetch(`data/${langCode}/content.json?t=${Date.now()}`, { cache: 'no-store' }),
+        fetch(`data/${langCode}/ui.json?t=${Date.now()}`, { cache: 'no-store' })
+      ]);
+      if (contentRes.ok && uiRes.ok) {
+        const contentData = await contentRes.json();
+        const uiData = await uiRes.json();
+        loadedLanguages[langCode] = mergeLanguageData(uiData, contentData);
         renderProfile(langCode);
-      } else {
-        console.error('[Portfolio] Failed to load language:', langCode, err);
+        return;
       }
+    } catch (_) {}
+
+    // 2. Fallback to unified data/{lang}.json
+    try {
+      const langConfig = appConfig.languages.find(l => l.code === langCode);
+      const filePath = langConfig ? langConfig.file : `data/${langCode}.json`;
+      const res = await fetch(`${filePath}?t=${Date.now()}`, { cache: 'no-store' });
+      if (res.ok) {
+        const data = await res.json();
+        loadedLanguages[langCode] = data;
+        renderProfile(langCode);
+        return;
+      }
+    } catch (_) {}
+
+    // 3. Fallback for file:// or offline: check window.I18N_DATA
+    if (window.I18N_DATA && window.I18N_DATA.languages && window.I18N_DATA.languages[langCode]) {
+      loadedLanguages[langCode] = window.I18N_DATA.languages[langCode];
+      renderProfile(langCode);
+    } else {
+      console.error('[Portfolio] Failed to load language:', langCode);
     }
   }
 
@@ -1348,19 +1421,27 @@
 
   // --- Bootstrapping ---
   async function loadDataAndInit() {
+    // 0. Use window.APP_CONFIG as priority if defined (e.g. file:// offline support)
+    if (typeof window !== 'undefined' && window.APP_CONFIG) {
+      appConfig = Object.assign({}, appConfig, window.APP_CONFIG);
+    }
+
     // 1. Try loading config.json, shared.json, & articles/categories.json dynamically if on server
     try {
-      const configRes = await fetch('data/config.json').catch(() => null);
-      if (configRes && configRes.ok) appConfig = await configRes.json();
+      const configRes = await fetch(`data/config.json?t=${Date.now()}`, { cache: 'no-store' }).catch(() => null);
+      if (configRes && configRes.ok) {
+        const fetchedConfig = await configRes.json();
+        appConfig = Object.assign({}, appConfig, fetchedConfig);
+      }
     } catch (_) {}
 
     try {
-      const sharedRes = await fetch('data/shared.json').catch(() => null);
+      const sharedRes = await fetch(`data/shared.json?t=${Date.now()}`, { cache: 'no-store' }).catch(() => null);
       if (sharedRes && sharedRes.ok) sharedData = await sharedRes.json();
     } catch (_) {}
 
     try {
-      const articlesRes = await fetch('articles/categories.json').catch(() => null);
+      const articlesRes = await fetch(`articles/categories.json?t=${Date.now()}`, { cache: 'no-store' }).catch(() => null);
       if (articlesRes && articlesRes.ok) {
         articlesData = await articlesRes.json();
       } else if (window.I18N_DATA && window.I18N_DATA.articles) {
@@ -1371,6 +1452,9 @@
         articlesData = window.I18N_DATA.articles;
       }
     }
+
+    // Apply feature toggles right away so disabled elements are hidden immediately without layout shift
+    applyFeatureToggles(appConfig.features);
 
     initTheme();
     initLanguage();
