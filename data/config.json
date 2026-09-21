@@ -13,13 +13,33 @@
       "code": "ar",
       "name": "العربية",
       "dir": "rtl",
-      "font": "Cairo"
+      "font": "Muna",
+      "headingFont": "Muna"
     },
     {
       "code": "en",
       "name": "English",
       "dir": "ltr",
-      "font": "Inter"
+      "font": "Inter",
+      "headingFont": "Inter"
     }
-  ]
+  ],
+  "availableFonts": {
+    "local": [
+      { "id": "Adobe Naskh", "name": "خط أدوبي نسخ", "type": "text" },
+      { "id": "KA Typical Naskh", "name": "خط النسخ النموذجي", "type": "text" },
+      { "id": "Muna", "name": "خط منى", "type": "text" },
+      { "id": "Zain", "name": "خط زين", "type": "heading" },
+      { "id": "AlMohanad", "name": "خط المهند", "type": "heading" },
+      { "id": "Milan Display", "name": "خط ميلان", "type": "heading" },
+      { "id": "AlJazeera", "name": "خط الجزيرة", "type": "text" }
+    ],
+    "web": [
+      { "id": "Cairo", "name": "Cairo (كايرو)" },
+      { "id": "Almarai", "name": "Almarai (المراعي)" },
+      { "id": "Tajawal", "name": "Tajawal (تجوال)" },
+      { "id": "Readex Pro", "name": "Readex Pro (ريدكس برو)" },
+      { "id": "Amiri", "name": "Amiri (أميري)" }
+    ]
+  }
 }

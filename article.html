@@ -110,6 +110,22 @@
             <span class="article-category-badge skeleton" id="article-category-badge"></span>
             <span class="article-date skeleton skeleton-text" id="article-date"></span>
             <span class="article-readtime skeleton skeleton-text" id="article-readtime"></span>
+
+            <!-- Reader Font Switcher Dropdown -->
+            <div class="reader-font-dropdown-container" id="reader-font-dropdown-container">
+              <button class="reader-font-btn" id="reader-font-btn" aria-haspopup="true" aria-expanded="false" title="تغيير خط المقال">
+                <svg class="reader-font-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="4 7 4 4 20 4 20 7"/>
+                  <line x1="9" x2="15" y1="20" y2="20"/>
+                  <line x1="12" x2="12" y1="4" y2="20"/>
+                </svg>
+                <span id="current-reader-font-text">خط القراءة</span>
+                <svg class="chevron-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m6 9 6 6 6-6"/>
+                </svg>
+              </button>
+              <div class="reader-font-menu" id="reader-font-menu" role="menu"></div>
+            </div>
           </div>
 
           <h1 class="article-main-title skeleton skeleton-title" id="article-main-title"></h1>

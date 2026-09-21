@@ -5,6 +5,110 @@
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700&display=swap');
+
+/* --------------------------------------------------------------------------
+   Local Arabic Typography (@font-face)
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Adobe Naskh';
+  src: url('../assets/fonts/ar/text/adobe-naskh.ttf') format('truetype'),
+       url('../assets/fonts/ar/text/%D8%AE%D8%B7%20%D8%A7%D8%AF%D9%88%D8%A8%D9%8A%20%D9%86%D8%B3%D8%AE.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 122%;
+}
+
+@font-face {
+  font-family: 'KA Typical Naskh';
+  src: url('../assets/fonts/ar/text/ka-typical.ttf') format('truetype'),
+       url('../assets/fonts/ar/text/KATypicalNaskhv2.0.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 120%;
+}
+
+@font-face {
+  font-family: 'Muna';
+  src: url('../assets/fonts/ar/text/muna.ttf') format('truetype'),
+       url('../assets/fonts/ar/text/Muna.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 110%;
+}
+
+@font-face {
+  font-family: 'Muna';
+  src: url('../assets/fonts/ar/heading/muna-black.ttf') format('truetype'),
+       url('../assets/fonts/ar/heading/MunaBlack.ttf') format('truetype');
+  font-weight: 700 900;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 110%;
+}
+
+@font-face {
+  font-family: 'Zain';
+  src: url('../assets/fonts/ar/heading/zain.ttf') format('truetype'),
+       url('../assets/fonts/ar/heading/Zain%20PC-VF.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 102%;
+}
+
+@font-face {
+  font-family: 'AlMohanad';
+  src: url('../assets/fonts/ar/heading/almohanad.ttf') format('truetype'),
+       url('../assets/fonts/ar/heading/%D8%AE%D8%B7%20%D8%AE%D8%A7%D9%84%D8%AF%D8%A8%D9%88%D9%84%D8%AF(%D8%A7%D9%84%D9%85%D9%87%D9%86%D8%AF).ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 96%;
+}
+
+@font-face {
+  font-family: 'Milan Display';
+  src: url('../assets/fonts/ar/heading/milan-display.otf') format('opentype'),
+       url('../assets/fonts/ar/heading/Milan%20Display%20Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 92%;
+}
+
+@font-face {
+  font-family: 'AlJazeera';
+  src: url('../assets/fonts/ar/text/aljazeera.ttf') format('truetype'),
+       url('../assets/fonts/ar/text/%D8%A7%D9%84%D8%AC%D8%B2%D9%8A%D8%B1%D8%A9.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 104%;
+}
+
+@font-face {
+  font-family: 'AlJazeera';
+  src: url('../assets/fonts/ar/heading/aljazeera-bold.ttf') format('truetype'),
+       url('../assets/fonts/ar/heading/%D8%A7%D9%84%D8%AC%D8%B2%D9%8A%D8%B1%D8%A9%20%D8%B9%D8%B1%D9%8A%D8%B6.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 104%;
+}
+
+@font-face {
+  font-family: 'Amiri';
+  src: local('Amiri'),
+       url('https://fonts.gstatic.com/s/amiri/v28/J7acnpFqFp3u5v5K.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  size-adjust: 120%;
+}
 
 /* --------------------------------------------------------------------------
    1. Design System & CSS Variables
@@ -43,11 +147,16 @@
   /* Typography */
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-arabic: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+  --font-heading: var(--font-arabic);
+  --article-font: var(--font-arabic);
   --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: all 0.15s ease;
+  --surface: var(--card);
 }
 
 /* Dark Theme - Activated via .dark class on <html> */
 html.dark {
+  --surface: var(--card);
   --background: #0b0f19;
   --foreground: #f1f5f9;
   --card: #111827;
@@ -74,6 +183,17 @@ html[dir="rtl"] {
 
 html[dir="rtl"] body {
   font-family: var(--font-arabic);
+}
+
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] h4,
+html[dir="rtl"] h5,
+html[dir="rtl"] h6,
+html[dir="rtl"] .hero-title,
+html[dir="rtl"] .section-title {
+  font-family: var(--font-heading);
 }
 
 /* --------------------------------------------------------------------------
@@ -1938,6 +2058,203 @@ html:not(.dark) .book-cover-area {
   margin-bottom: 0.85rem;
 }
 
+/* --------------------------------------------------------------------------
+   Reader Font Selector (article.html)
+   -------------------------------------------------------------------------- */
+.reader-font-dropdown-container {
+  position: relative;
+  display: inline-flex;
+  margin-inline-start: auto;
+}
+
+.reader-font-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--foreground);
+  background-color: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: inherit;
+  user-select: none;
+}
+
+.reader-font-btn:hover {
+  background-color: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.reader-font-icon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.reader-font-btn .chevron-icon {
+  width: 0.85rem;
+  height: 0.85rem;
+  transition: transform var(--transition-fast);
+  color: var(--muted-foreground);
+}
+
+.reader-font-dropdown-container.open .reader-font-btn .chevron-icon {
+  transform: rotate(180deg);
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reader-font-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  inset-inline-end: 0;
+  width: 250px;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 0.5rem;
+  z-index: 100;
+  max-height: 380px;
+  overflow-y: auto;
+}
+
+.reader-font-menu.open {
+  display: block;
+  animation: dropdownFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Reader Font Size Control Bar */
+.reader-size-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 0.6rem;
+  margin-bottom: 0.35rem;
+  background-color: var(--secondary);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.reader-size-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.reader-size-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.reader-size-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--foreground);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+
+.reader-size-btn:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.reader-size-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.reader-size-val {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--primary);
+  min-width: 2.75rem;
+  text-align: center;
+}
+
+.font-menu-group-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted-foreground);
+  padding: 0.45rem 0.65rem 0.25rem 0.65rem;
+}
+
+.font-menu-divider {
+  height: 1px;
+  background-color: var(--border);
+  margin: 0.35rem 0;
+}
+
+.reader-font-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: none;
+  color: var(--foreground);
+  cursor: pointer;
+  font-size: 0.95rem;
+  text-align: start;
+  transition: var(--transition);
+}
+
+.reader-font-option:hover,
+.reader-font-option:focus {
+  background-color: var(--secondary);
+  color: var(--primary);
+}
+
+.reader-font-option.active {
+  background-color: var(--primary-light);
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.reader-font-check {
+  display: none;
+  width: 1rem;
+  height: 1rem;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.reader-font-option.active .reader-font-check {
+  display: block;
+}
+
 .article-main-title {
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 800;
@@ -1961,15 +2278,31 @@ html:not(.dark) .book-cover-area {
 
 /* Markdown Body Typography */
 .markdown-body {
-  font-size: 1.05rem;
-  line-height: 1.8;
+  font-family: var(--article-font, var(--font-arabic)) !important;
+  font-size: calc(1.05rem * var(--article-font-scale, 1));
+  line-height: 1.85;
   color: var(--foreground);
+}
+
+.markdown-body p,
+.markdown-body li,
+.markdown-body blockquote,
+.markdown-body td,
+.markdown-body th {
+  font-family: inherit;
 }
 
 .markdown-body h1,
 .markdown-body h2,
 .markdown-body h3,
-.markdown-body h4 {
+.markdown-body h4,
+html[dir="rtl"] .markdown-body h1,
+html[dir="rtl"] .markdown-body h2,
+html[dir="rtl"] .markdown-body h3,
+html[dir="rtl"] .markdown-body h4,
+html[dir="rtl"] .markdown-body h5,
+html[dir="rtl"] .markdown-body h6 {
+  font-family: var(--article-font, var(--font-heading));
   font-weight: 700;
   color: var(--foreground);
   margin-top: 2.25rem;
@@ -2022,14 +2355,14 @@ html:not(.dark) .book-cover-area {
 }
 
 .markdown-body code {
-  font-family: 'JetBrains Mono', Consolas, Monaco, monospace;
+  font-family: 'JetBrains Mono', Consolas, Monaco, monospace !important;
   font-size: 0.875em;
   background-color: var(--secondary);
   color: var(--primary);
   padding: 0.15rem 0.4rem;
   border-radius: 4px;
   border: 1px solid var(--border);
-  direction: ltr;
+  direction: ltr !important;
   unicode-bidi: isolate;
 }
 
@@ -2042,17 +2375,25 @@ html:not(.dark) .book-cover-area {
   margin: 1.5rem 0;
   border: 1px solid var(--border);
   position: relative;
-  direction: ltr;
-  text-align: left;
+  direction: ltr !important;
+  text-align: left !important;
+}
+
+html:not(.dark) .markdown-body pre {
+  background-color: #f8fafc;
+  color: #1e293b;
+  border-color: #e2e8f0;
 }
 
 .markdown-body pre code {
-  background: transparent;
-  border: none;
+  background: transparent !important;
+  border: none !important;
   color: inherit;
   padding: 0;
   font-size: 0.9rem;
   line-height: 1.6;
+  direction: ltr !important;
+  font-family: 'JetBrains Mono', Consolas, Monaco, monospace !important;
 }
 
 /* Copy Code Button */
@@ -2087,6 +2428,17 @@ html:not(.dark) .book-cover-area {
 .copy-code-btn:hover {
   background: rgba(255, 255, 255, 0.2);
   color: #ffffff;
+}
+
+html:not(.dark) .copy-code-btn {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: #475569;
+}
+
+html:not(.dark) .copy-code-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #0f172a;
 }
 
 /* Responsive Tables for Markdown (Prevents Mobile Overflow) */
@@ -2173,7 +2525,8 @@ html:not(.dark) .book-cover-area {
     right: 0;
     height: calc(3.75rem + env(safe-area-inset-bottom, 0px));
     padding-bottom: env(safe-area-inset-bottom, 0px);
-    background: color-mix(in srgb, var(--surface) 92%, transparent);
+    background-color: var(--card);
+    background: color-mix(in srgb, var(--card) 92%, transparent);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-top: 1px solid var(--border);

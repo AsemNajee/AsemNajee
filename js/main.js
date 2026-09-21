@@ -101,6 +101,260 @@
     }
   }
 
+  // --- Font & Typography Configuration Engine ---
+  const LOCAL_FONTS = [
+    'Adobe Naskh',
+    'KA Typical Naskh',
+    'Muna',
+    'Zain',
+    'AlMohanad',
+    'Milan Display',
+    'AlJazeera'
+  ];
+
+  const PRELOADED_WEB_FONTS = ['Cairo', 'Almarai', 'Tajawal', 'Inter'];
+
+  function ensureGoogleFontLoaded(fontFamily) {
+    if (!fontFamily || typeof fontFamily !== 'string') return;
+    const cleanFont = fontFamily.trim().replace(/^['"]|['"]$/g, '');
+    if (LOCAL_FONTS.includes(cleanFont) || PRELOADED_WEB_FONTS.includes(cleanFont)) {
+      return;
+    }
+    const linkId = `gfont-${cleanFont.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
+    if (document.getElementById(linkId)) return;
+
+    const link = document.createElement('link');
+    link.id = linkId;
+    link.rel = 'stylesheet';
+    link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(cleanFont).replace(/%20/g, '+')}:wght@300;400;500;600;700;800&display=swap`;
+    document.head.appendChild(link);
+  }
+
+  function applyConfiguredFont(langConfig) {
+    if (!langConfig) return;
+    const bodyFont = langConfig.font;
+    const headingFont = langConfig.headingFont || bodyFont;
+
+    if (bodyFont) {
+      ensureGoogleFontLoaded(bodyFont);
+      const fontStack = `'${bodyFont}', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`;
+      if (langConfig.dir === 'rtl' || langConfig.code === 'ar') {
+        document.documentElement.style.setProperty('--font-arabic', fontStack);
+      } else {
+        document.documentElement.style.setProperty('--font-sans', fontStack);
+      }
+    }
+
+    if (headingFont) {
+      ensureGoogleFontLoaded(headingFont);
+      const headingStack = `'${headingFont}', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`;
+      document.documentElement.style.setProperty('--font-heading', headingStack);
+    }
+  }
+
+  // --- Article Reader Font Switcher (article.html) ---
+  function initArticleReaderFontSwitcher(langCode) {
+    const container = document.getElementById('reader-font-dropdown-container');
+    const btn = document.getElementById('reader-font-btn');
+    const menu = document.getElementById('reader-font-menu');
+    const btnText = document.getElementById('current-reader-font-text');
+
+    if (!container || !btn || !menu) return;
+
+    const isAr = langCode === 'ar' || document.documentElement.lang === 'ar' || document.documentElement.dir === 'rtl';
+
+    const labels = {
+      defaultBtnText: isAr ? 'خط القراءة' : 'Reading Font',
+      defaultOption: isAr ? 'افتراضي الموقع' : 'Site Default',
+      localGroup: isAr ? 'خطوط محلية' : 'Local Fonts',
+      webGroup: isAr ? 'خطوط الويب' : 'Web Fonts'
+    };
+
+    const availableFonts = appConfig.availableFonts || {
+      local: [
+        { id: 'Adobe Naskh', name: 'خط أدوبي نسخ' },
+        { id: 'KA Typical Naskh', name: 'خط النسخ النموذجي' },
+        { id: 'Muna', name: 'خط منى' },
+        { id: 'Zain', name: 'خط زين' },
+        { id: 'AlMohanad', name: 'خط المهند' },
+        { id: 'Milan Display', name: 'خط ميلان' },
+        { id: 'AlJazeera', name: 'خط الجزيرة' }
+      ],
+      web: [
+        { id: 'Cairo', name: 'Cairo (كايرو)' },
+        { id: 'Almarai', name: 'Almarai (المراعي)' },
+        { id: 'Tajawal', name: 'Tajawal (تجوال)' },
+        { id: 'Readex Pro', name: 'Readex Pro (ريدكس برو)' },
+        { id: 'Amiri', name: 'Amiri (أميري)' }
+      ]
+    };
+
+    const savedFont = safeGetStorage('portfolio_reader_font', '');
+    let currentScalePercent = parseInt(safeGetStorage('portfolio_reader_font_scale', '100'), 10);
+    if (isNaN(currentScalePercent) || currentScalePercent < 80 || currentScalePercent > 150) {
+      currentScalePercent = 100;
+    }
+
+    function applyReaderScale(pct) {
+      currentScalePercent = Math.max(80, Math.min(150, pct));
+      safeSetStorage('portfolio_reader_font_scale', String(currentScalePercent));
+      document.documentElement.style.setProperty('--article-font-scale', String(currentScalePercent / 100));
+      const valElem = menu.querySelector('#reader-size-val');
+      if (valElem) valElem.textContent = `${currentScalePercent}%`;
+      const decBtn = menu.querySelector('#reader-size-dec');
+      const incBtn = menu.querySelector('#reader-size-inc');
+      if (decBtn) decBtn.disabled = currentScalePercent <= 80;
+      if (incBtn) incBtn.disabled = currentScalePercent >= 150;
+    }
+
+    // Apply saved scale immediately
+    applyReaderScale(currentScalePercent);
+
+    function applyReaderFont(fontId, fontName) {
+      if (!fontId) {
+        document.documentElement.style.removeProperty('--article-font');
+        safeSetStorage('portfolio_reader_font', '');
+        if (btnText) btnText.textContent = labels.defaultBtnText;
+      } else {
+        ensureGoogleFontLoaded(fontId);
+        document.documentElement.style.setProperty('--article-font', `'${fontId}', var(--font-sans), var(--font-arabic)`);
+        safeSetStorage('portfolio_reader_font', fontId);
+        if (btnText) btnText.textContent = fontName || fontId;
+      }
+
+      menu.querySelectorAll('.reader-font-option').forEach(opt => {
+        const optFont = opt.getAttribute('data-font');
+        const isActive = (!fontId && !optFont) || (optFont === fontId);
+        opt.classList.toggle('active', isActive);
+      });
+    }
+
+    // Apply saved font if existing
+    if (savedFont) {
+      const allFonts = [...(availableFonts.local || []), ...(availableFonts.web || [])];
+      const match = allFonts.find(f => f.id === savedFont);
+      applyReaderFont(savedFont, match ? match.name : savedFont);
+    } else {
+      if (btnText) btnText.textContent = labels.defaultBtnText;
+    }
+
+    // Render dropdown menu items
+    let menuHTML = `
+      <div class="reader-size-bar" role="group" aria-label="${isAr ? 'حجم الخط' : 'Font Size'}">
+        <span class="reader-size-title">${isAr ? 'حجم الخط' : 'Font Size'}</span>
+        <div class="reader-size-controls">
+          <button class="reader-size-btn" id="reader-size-dec" type="button" title="${isAr ? 'تصغير الخط' : 'Decrease size'}" ${currentScalePercent <= 80 ? 'disabled' : ''}>A-</button>
+          <span class="reader-size-val" id="reader-size-val">${currentScalePercent}%</span>
+          <button class="reader-size-btn" id="reader-size-inc" type="button" title="${isAr ? 'تكبير الخط' : 'Increase size'}" ${currentScalePercent >= 150 ? 'disabled' : ''}>A+</button>
+        </div>
+      </div>
+      <div class="font-menu-divider"></div>
+      <button class="reader-font-option ${!savedFont ? 'active' : ''}" data-font="" role="menuitem">
+        <span>${labels.defaultOption}</span>
+        <svg class="reader-font-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </button>
+      <div class="font-menu-divider"></div>
+    `;
+
+    if (availableFonts.local && availableFonts.local.length > 0) {
+      menuHTML += `<div class="font-menu-group-title">${labels.localGroup}</div>`;
+      availableFonts.local.forEach(f => {
+        const isActive = savedFont === f.id;
+        menuHTML += `
+          <button class="reader-font-option ${isActive ? 'active' : ''}" data-font="${f.id}" data-name="${f.name}" role="menuitem" style="font-family: '${f.id}', sans-serif;">
+            <span>${f.name}</span>
+            <svg class="reader-font-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+        `;
+      });
+    }
+
+    if (availableFonts.web && availableFonts.web.length > 0) {
+      menuHTML += `<div class="font-menu-divider"></div>`;
+      menuHTML += `<div class="font-menu-group-title">${labels.webGroup}</div>`;
+      availableFonts.web.forEach(f => {
+        const isActive = savedFont === f.id;
+        menuHTML += `
+          <button class="reader-font-option ${isActive ? 'active' : ''}" data-font="${f.id}" data-name="${f.name}" role="menuitem" style="font-family: '${f.id}', sans-serif;">
+            <span>${f.name}</span>
+            <svg class="reader-font-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </button>
+        `;
+      });
+    }
+
+    menu.innerHTML = menuHTML;
+
+    const decBtn = menu.querySelector('#reader-size-dec');
+    const incBtn = menu.querySelector('#reader-size-inc');
+    if (decBtn) {
+      decBtn.onclick = (e) => {
+        e.stopPropagation();
+        applyReaderScale(currentScalePercent - 10);
+      };
+    }
+    if (incBtn) {
+      incBtn.onclick = (e) => {
+        e.stopPropagation();
+        applyReaderScale(currentScalePercent + 10);
+      };
+    }
+
+    function closeReaderFontDropdown() {
+      container.classList.remove('open');
+      menu.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+
+    function toggleReaderFontDropdown() {
+      const isOpen = menu.classList.contains('open');
+      if (isOpen) {
+        closeReaderFontDropdown();
+      } else {
+        container.classList.add('open');
+        menu.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    menu.querySelectorAll('.reader-font-option').forEach(opt => {
+      opt.onclick = (e) => {
+        e.stopPropagation();
+        const fontId = opt.getAttribute('data-font');
+        const fontName = opt.getAttribute('data-name') || fontId;
+        applyReaderFont(fontId, fontName);
+        closeReaderFontDropdown();
+      };
+    });
+
+    if (!container.dataset.initialized) {
+      container.dataset.initialized = 'true';
+
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        toggleReaderFontDropdown();
+      };
+
+      document.addEventListener('click', (e) => {
+        if (!container.contains(e.target)) {
+          closeReaderFontDropdown();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeReaderFontDropdown();
+        }
+      });
+    }
+  }
+
   // --- Helper to Remove Skeleton Classes & Temporary Dimensions ---
   function removeSkeleton(element) {
     if (element) {
@@ -630,6 +884,9 @@
     document.documentElement.lang = langConfig.code;
     document.documentElement.dir = langConfig.dir;
 
+    // Apply Site-Wide Font Configuration
+    applyConfiguredFont(langConfig);
+
     if (data.meta) {
       document.title = data.meta.title;
       const metaDesc = document.querySelector('meta[name="description"]');
@@ -1123,6 +1380,7 @@
     const articleContentElem = document.getElementById('article-content');
     if (articleContentElem) {
       renderArticleReader(langCode, data);
+      initArticleReaderFontSwitcher(langCode);
     }
 
     // 12. Contact Section
@@ -1402,6 +1660,25 @@
 
     // Apply feature toggles right away so disabled elements are hidden immediately without layout shift
     applyFeatureToggles(appConfig.features);
+
+    // Apply site font immediately for active language
+    const initialLangConfig = appConfig.languages.find(l => l.code === currentLangCode) || appConfig.languages[0];
+    applyConfiguredFont(initialLangConfig);
+
+    // If on article page, apply saved reader font immediately to prevent flash
+    const savedReaderFont = safeGetStorage('portfolio_reader_font', '');
+    if (savedReaderFont && document.getElementById('article-content')) {
+      ensureGoogleFontLoaded(savedReaderFont);
+      document.documentElement.style.setProperty('--article-font', `'${savedReaderFont}', var(--font-sans), var(--font-arabic)`);
+    }
+
+    const savedReaderScale = safeGetStorage('portfolio_reader_font_scale', '100');
+    if (savedReaderScale && document.getElementById('article-content')) {
+      const scaleNum = parseInt(savedReaderScale, 10);
+      if (!isNaN(scaleNum) && scaleNum >= 80 && scaleNum <= 150) {
+        document.documentElement.style.setProperty('--article-font-scale', String(scaleNum / 100));
+      }
+    }
 
     initTheme();
     initLanguage();
