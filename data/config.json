@@ -3,7 +3,7 @@
   "features": {
     "skills": true,
     "projects": true,
-    "articles": false,
+    "articles": true,
     "books": true,
     "testimonials": true,
     "contact": true
@@ -13,16 +13,13 @@
       "code": "ar",
       "name": "العربية",
       "dir": "rtl",
-      "font": "Cairo",
-      "file": "data/ar.json"
+      "font": "Cairo"
     },
     {
       "code": "en",
       "name": "English",
       "dir": "ltr",
-      "font": "Inter",
-      "file": "data/en.json"
+      "font": "Inter"
     }
   ]
 }
-

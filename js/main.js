@@ -48,46 +48,37 @@
     } catch (e) {}
   }
 
-  // --- Default Inlined Fallback (Config & Shared) ---
-  const fallbackI18n = (typeof window !== 'undefined' && window.I18N_DATA) ? window.I18N_DATA : {
-    config: {
-      defaultLanguage: 'ar',
-      features: {
-        skills: true,
-        projects: true,
-        articles: true,
-        books: true,
-        testimonials: true,
-        contact: true
-      },
-      languages: [
-        { code: 'ar', name: 'العربية', dir: 'rtl', font: 'Cairo', file: 'data/ar.json' },
-        { code: 'en', name: 'English', dir: 'ltr', font: 'Inter', file: 'data/en.json' }
-      ]
+  // Default config state (loaded dynamically from data/config.json)
+  let appConfig = {
+    defaultLanguage: 'ar',
+    features: {
+      skills: true,
+      projects: true,
+      articles: false,
+      books: true,
+      testimonials: true,
+      contact: true
     },
-    shared: {
-      avatar: 'assets/images/logo.webp',
-      socials: {
-        github: 'https://github.com/Asemnajee',
-        linkedin: 'https://www.linkedin.com/in/asemnajee',
-        telegram: 'https://t.me/AsemNajee',
-        email: 'asem.a.najee@gmail.com'
-      },
-      testimonials: []
-    },
-    languages: {}
+    languages: [
+      { code: 'ar', name: 'العربية', dir: 'rtl', font: 'Cairo' },
+      { code: 'en', name: 'English', dir: 'ltr', font: 'Inter' }
+    ]
   };
 
-  let appConfig = (typeof window !== 'undefined' && window.APP_CONFIG) ? window.APP_CONFIG : fallbackI18n.config;
-  let sharedData = fallbackI18n.shared;
+  let sharedData = {
+    avatar: 'assets/images/logo.webp',
+    socials: {},
+    testimonials: []
+  };
+
   const loadedLanguages = {};
-  let currentLangCode = safeGetStorage('portfolio_lang', appConfig.defaultLanguage || 'ar');
+  let currentLangCode = safeGetStorage('portfolio_lang', 'ar');
 
   // Filter states
   let currentProjectsFilter = 'all';
   let currentBooksFilter = 'all';
   let currentArticlesFilter = 'all';
-  let articlesData = fallbackI18n.articles || { categories: [] };
+  let articlesData = { categories: [] };
 
   // --- Theme Management ---
   function initTheme() {
@@ -536,18 +527,12 @@
     if (contentElem) {
       let mdText = '';
       try {
-        const mdRes = await fetch(`articles/${targetCategory.folder}/${targetArticle.file}`);
+        const mdRes = await fetch(`articles/${targetCategory.folder}/${targetArticle.file}?t=${Date.now()}`, { cache: 'no-store' });
         if (mdRes.ok) {
           mdText = await mdRes.text();
         }
       } catch (fetchErr) {
-        // Fetch restricted on file:// or offline
-      }
-
-      // Offline / file:// protocol fallback
-      if (!mdText && window.I18N_DATA && window.I18N_DATA.articleContents) {
-        const key = `${targetCategory.folder}/${targetArticle.file}`;
-        mdText = window.I18N_DATA.articleContents[key] || window.I18N_DATA.articleContents[targetArticle.slug] || '';
+        console.error('[Portfolio] Error fetching markdown:', fetchErr);
       }
 
       if (mdText) {
@@ -1047,11 +1032,6 @@
     }
 
     if (articlesWrapper) {
-      if (!articlesData || !articlesData.categories || articlesData.categories.length === 0) {
-        if (window.I18N_DATA && window.I18N_DATA.articles) {
-          articlesData = window.I18N_DATA.articles;
-        }
-      }
       if (articlesData && Array.isArray(articlesData.categories)) {
         const allCategories = articlesData.categories;
       const countLabel = data.articles && data.articles.articleCount ? data.articles.articleCount : (langCode === 'ar' ? 'مقالات' : 'Articles');
@@ -1142,11 +1122,6 @@
     // 11. Dedicated Article Reader Page (article.html)
     const articleContentElem = document.getElementById('article-content');
     if (articleContentElem) {
-      if (!articlesData || !articlesData.categories || articlesData.categories.length === 0) {
-        if (window.I18N_DATA && window.I18N_DATA.articles) {
-          articlesData = window.I18N_DATA.articles;
-        }
-      }
       renderArticleReader(langCode, data);
     }
 
@@ -1259,28 +1234,11 @@
         loadedLanguages[langCode] = mergeLanguageData(uiData, contentData);
         renderProfile(langCode);
         return;
+      } else {
+        console.error(`[Portfolio] Could not load content or ui for language: ${langCode}`);
       }
-    } catch (_) {}
-
-    // 2. Fallback to unified data/{lang}.json
-    try {
-      const langConfig = appConfig.languages.find(l => l.code === langCode);
-      const filePath = langConfig ? langConfig.file : `data/${langCode}.json`;
-      const res = await fetch(`${filePath}?t=${Date.now()}`, { cache: 'no-store' });
-      if (res.ok) {
-        const data = await res.json();
-        loadedLanguages[langCode] = data;
-        renderProfile(langCode);
-        return;
-      }
-    } catch (_) {}
-
-    // 3. Fallback for file:// or offline: check window.I18N_DATA
-    if (window.I18N_DATA && window.I18N_DATA.languages && window.I18N_DATA.languages[langCode]) {
-      loadedLanguages[langCode] = window.I18N_DATA.languages[langCode];
-      renderProfile(langCode);
-    } else {
-      console.error('[Portfolio] Failed to load language:', langCode);
+    } catch (err) {
+      console.error(`[Portfolio] Failed to load language files for ${langCode}:`, err);
     }
   }
 
@@ -1421,12 +1379,7 @@
 
   // --- Bootstrapping ---
   async function loadDataAndInit() {
-    // 0. Use window.APP_CONFIG as priority if defined (e.g. file:// offline support)
-    if (typeof window !== 'undefined' && window.APP_CONFIG) {
-      appConfig = Object.assign({}, appConfig, window.APP_CONFIG);
-    }
-
-    // 1. Try loading config.json, shared.json, & articles/categories.json dynamically if on server
+    // 1. Load config.json, shared.json, & articles/categories.json from server
     try {
       const configRes = await fetch(`data/config.json?t=${Date.now()}`, { cache: 'no-store' }).catch(() => null);
       if (configRes && configRes.ok) {
@@ -1444,14 +1397,8 @@
       const articlesRes = await fetch(`articles/categories.json?t=${Date.now()}`, { cache: 'no-store' }).catch(() => null);
       if (articlesRes && articlesRes.ok) {
         articlesData = await articlesRes.json();
-      } else if (window.I18N_DATA && window.I18N_DATA.articles) {
-        articlesData = window.I18N_DATA.articles;
       }
-    } catch (_) {
-      if (window.I18N_DATA && window.I18N_DATA.articles) {
-        articlesData = window.I18N_DATA.articles;
-      }
-    }
+    } catch (_) {}
 
     // Apply feature toggles right away so disabled elements are hidden immediately without layout shift
     applyFeatureToggles(appConfig.features);
