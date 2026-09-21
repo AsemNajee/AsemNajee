@@ -60,7 +60,7 @@
       contact: true
     },
     languages: [
-      { code: 'ar', name: 'العربية', dir: 'rtl', font: 'Cairo' },
+      { code: 'ar', name: 'العربية', dir: 'rtl', font: 'Muna' },
       { code: 'en', name: 'English', dir: 'ltr', font: 'Inter' }
     ]
   };

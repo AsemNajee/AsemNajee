@@ -146,7 +146,7 @@
 
   /* Typography */
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-arabic: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+  --font-arabic: 'Muna', 'Segoe UI', Tahoma, sans-serif;
   --font-heading: var(--font-arabic);
   --article-font: var(--font-arabic);
   --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1456,7 +1456,7 @@ html.dark .skeleton::after {
 .testimonial-card[dir="rtl"] {
   direction: rtl;
   text-align: right;
-  font-family: 'Cairo', sans-serif;
+  font-family: 'Muna', sans-serif;
 }
 
 .testimonial-card[dir="ltr"] {
