@@ -90,70 +90,18 @@
       "liveUrl": "https://ftm-yemen.com",
       "icon": "terminal",
       "image": ""
-    },
-    {
-      "id": "task-manager-cli",
-      "title": "أداة Task Manager CLI",
-      "description": "أداة سطر أوامر تفاعلية وخفيفة الوزن لإدارة المهام والمشاريع مع دعم تصدير التقارير والتخزين المحلي السريع.",
-      "category": "مكتبات وأدوات",
-      "tags": ["Rust", "CLI", "أدوات المطورين"],
-      "github": "https://github.com/Asemnajee",
-      "liveUrl": "",
-      "icon": "terminal",
-      "image": ""
-    },
-    {
-      "id": "finance-tracker-api",
-      "title": "نظام Personal Finance API",
-      "description": "واجهة برمجية RESTful لتتبع الميزانية الشخصية والمصروفات الشهرية مع توثيق تفاعلي عبر Swagger ومصادقة JWT.",
-      "category": "الأنظمة الخلفية والـ APIs",
-      "tags": ["Node.js", "Express", "TypeScript", "MongoDB"],
-      "github": "https://github.com/Asemnajee",
-      "liveUrl": "",
-      "icon": "database",
-      "image": ""
     }
   ],
   "books": [
     {
-      "id": "book-backend-arch",
-      "title": "دليل هندسة الأنظمة الخلفية الحديثة",
+      "id": "book-intro-to-computer-programming",
+      "title": "مقدمة إلى برمجة الحاسوب",
       "description": "مرجع شامل لتصميم وتطوير واجهات برمجة التطبيقات (APIs)، معمارية الـ Microservices، وأفضل ممارسات إدارة قواعد البيانات والـ Caching.",
-      "category": "هندسة البرمجيات والـ Backend",
+      "category": "برمجة الحاسوب",
       "cover": "",
       "pdfUrl": "#",
-      "pages": 180,
-      "year": 2025
-    },
-    {
-      "id": "book-flutter-mastery",
-      "title": "احتراف تطوير تطبيقات الموبايل باستخدام Flutter",
-      "description": "كتاب تطبيقي يغطي بناء التطبيقات من الصفر حتى الإنتاج، إدارة الحالة المتقدمة، واستدعاء الواجهات الخلفية بأمان وكفاءة.",
-      "category": "تطوير تطبيقات الموبايل",
-      "cover": "",
-      "pdfUrl": "#",
-      "pages": 220,
-      "year": 2024
-    },
-    {
-      "id": "book-clean-code-java",
-      "title": "أساسيات الكود النظيف في لغة Java",
-      "description": "دليل عملي لكتابة شفرة برمجية قابلة للقراءة والصيانة، تطبيق مبادئ SOLID، وأنماط التصميم الأكثر استخداماً في بيئات العمل.",
-      "category": "هندسة البرمجيات والـ Backend",
-      "cover": "",
-      "pdfUrl": "#",
-      "pages": 140,
-      "year": 2024
-    },
-    {
-      "id": "book-db-design",
-      "title": "مدخل إلى تصميم قواعد البيانات والـ ORM",
-      "description": "شرح عملي ومبسط لنظرية قواعد البيانات العلائقية، تصميم المخططات، كتابة الاستعلامات المعقدة، وبناء مكتبات ORM مخصصة.",
-      "category": "قواعد البيانات",
-      "cover": "",
-      "pdfUrl": "#",
-      "pages": 160,
-      "year": 2023
+      "pages": 65,
+      "year": 2026
     }
   ],
   "contact": {

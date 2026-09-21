@@ -1,11 +1,32 @@
 {
   "avatar": "assets/images/logo.webp",
-  "socials": {
-    "github": "https://github.com/Asemnajee",
-    "linkedin": "https://www.linkedin.com/in/asemnajee",
-    "telegram": "https://t.me/AsemNajee",
-    "email": "asem.a.najee@gmail.com"
-  },
+  "socials": [
+    {
+      "platform": "github",
+      "name": "GitHub",
+      "url": "https://github.com/Asemnajee"
+    },
+    {
+      "platform": "linkedin",
+      "name": "LinkedIn",
+      "url": "https://www.linkedin.com/in/asemnajee"
+    },
+    {
+      "platform": "telegram",
+      "name": "Telegram",
+      "url": "https://t.me/asimbly"
+    },
+    {
+      "platform": "email",
+      "name": "Email",
+      "url": "asem.a.najee@gmail.com"
+    },
+    {
+      "platform": "youtube",
+      "name": "Youtube",
+      "url": "https://youtube.com/@asimbly"
+    }
+  ],
   "testimonials": [
     {
       "id": "t1",
@@ -15,24 +36,6 @@
       "content": "عمل عاصم معنا على تطوير الـ Backend لأحد مشاريعنا الكبرى، وكان أداؤه ممتازاً جداً من ناحية سرعة التنفيذ ونظافة الكود والالتزام بالمواعيد.",
       "rating": 5,
       "project": "منصة إدارة الطلبات"
-    },
-    {
-      "id": "t2",
-      "name": "Sarah Jenkins",
-      "role": "Product Manager, TechFlow",
-      "avatar": "",
-      "content": "Asem delivered our Flutter mobile app ahead of schedule with top-notch quality. His communication and technical skills are exceptional.",
-      "rating": 5,
-      "project": "E-Commerce App"
-    },
-    {
-      "id": "t3",
-      "name": "د. عبدالمجيد الراوي",
-      "role": "مؤسس منصة تعليمية",
-      "avatar": "",
-      "content": "تجربتي مع عاصم كانت مميزة جداً، قام بهندسة نظام الـ API وقواعد البيانات بكفاءة عالية مما ساعدنا على التوسع السلس.",
-      "rating": 5,
-      "project": "نظام إدارة الطلاب"
     }
   ]
 }

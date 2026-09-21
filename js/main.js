@@ -874,6 +874,219 @@
     });
   }
 
+  // --- Customizable Social Links Engine ---
+  const SOCIAL_ICONS = {
+    github: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>',
+    linkedin: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>',
+    telegram: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>',
+    email: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>',
+    mail: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>',
+    twitter: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
+    x: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
+    whatsapp: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>',
+    youtube: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path><path d="m10 15 5-3-5-3z"></path></svg>',
+    facebook: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>',
+    instagram: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>',
+    discord: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="1.5"></circle><circle cx="15" cy="12" r="1.5"></circle><path d="M7.5 7.5c3.5-1 5.5-1 9 0 .5 2 1.5 5 1.5 8.5-2.5 1.5-5 1.5-6 1.5s-3.5 0-6-1.5c0-3.5 1-6.5 1.5-8.5z"></path></svg>',
+    medium: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>',
+    gitlab: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 13.29-3.33-10a.42.42 0 0 0-.14-.18.38.38 0 0 0-.22-.11.44.44 0 0 0-.24.06.4.4 0 0 0-.15.19L15 8.5H9L6.08 3.25a.4.4 0 0 0-.15-.19.44.44 0 0 0-.24-.06.38.38 0 0 0-.22.11.42.42 0 0 0-.14.18L2 13.29a.74.74 0 0 0 .27.83L12 21l9.69-6.88a.71.71 0 0 0 .31-.83Z"></path></svg>',
+    stackoverflow: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17v4h16v-4"></path><path d="M7 16h10"></path><path d="M8 12l9.7 2"></path><path d="M10 8.5l9 4.5"></path><path d="M13 5.5l7.5 7"></path></svg>',
+    reddit: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="7"></circle><circle cx="9.5" cy="13.5" r="1.5"></circle><circle cx="14.5" cy="13.5" r="1.5"></circle><path d="M10 16.5c1 1 3 1 4 0"></path><path d="M12 7V4l4 1"></path><circle cx="18" cy="5" r="1"></circle><circle cx="4" cy="13" r="2"></circle><circle cx="20" cy="13" r="2"></circle></svg>',
+    globe: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>',
+    website: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>',
+    site: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>',
+    tiktok: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.81 4.49 6.27 6.27 0 0 0 1.88-4.49V8.75a8.28 8.28 0 0 0 4.8 1.54V6.84a4.85 4.85 0 0 1-.9-.15z"/></svg>',
+    threads: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 0 0-9 9 9 9 0 0 0 14.7 6.9l-1.3-1.5A7 7 0 1 1 19 12c0 2.2-1.3 4-3.5 4s-3.5-1.5-3.5-4a5 5 0 0 1 7.8-4.2l1.4-1.4A7 7 0 0 0 12 5a7 7 0 0 0-7 7 7 7 0 0 0 7 7c3.3 0 6.2-2.1 6.9-5.3"></path></svg>',
+    twitch: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7"></path></svg>',
+    patreon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.82 2.41a7.35 7.35 0 1 0 0 14.7 7.35 7.35 0 0 0 0-14.7zM2 21.59h3.64V2.41H2v19.18z"/></svg>',
+    buymeacoffee: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"></path><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path><line x1="6" y1="2" x2="6" y2="4"></line><line x1="10" y1="2" x2="10" y2="4"></line><line x1="14" y1="2" x2="14" y2="4"></line></svg>',
+    coffee: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 1 1 0 8h-1"></path><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path><line x1="6" y1="2" x2="6" y2="4"></line><line x1="10" y1="2" x2="10" y2="4"></line><line x1="14" y1="2" x2="14" y2="4"></line></svg>',
+    behance: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 12.3c.7-.2 1.4-.7 1.8-1.3.4-.6.6-1.4.6-2.2 0-1.2-.4-2.2-1.3-2.9C8 5.2 6.7 4.9 5.2 4.9H0v14.2h5.6c1.6 0 2.9-.4 3.9-1.2.9-.8 1.4-1.9 1.4-3.2 0-1-.3-1.8-.8-2.4h-2.3zM2.8 7.3h2.2c.8 0 1.4.1 1.8.4.4.3.6.8.6 1.4 0 .6-.2 1.1-.6 1.4-.4.3-1 .4-1.8.4H2.8V7.3zm2.5 9.4H2.8v-4.1h2.5c.9 0 1.6.2 2 .5.4.3.7.8.7 1.5 0 .7-.2 1.2-.7 1.6-.4.3-1.1.5-2 .5zm13.1-6.1c-1.3 0-2.4.4-3.2 1.3-.8.9-1.3 2-1.3 3.5 0 1.4.4 2.6 1.3 3.5.9.9 2 1.3 3.4 1.3 1.2 0 2.2-.3 3-.9.8-.6 1.3-1.4 1.5-2.4h-2.6c-.1.4-.4.8-.7 1-.4.2-.8.3-1.3.3-.7 0-1.3-.2-1.7-.7-.4-.5-.6-1.1-.6-1.9h7c.1-.5.1-.9.1-1.2 0-1.4-.4-2.5-1.2-3.3-.8-.9-1.9-1.5-3.3-1.5zm-2 3.6c.1-.6.3-1.1.7-1.4.4-.3.9-.5 1.5-.5.6 0 1 .2 1.4.5.3.3.6.8.6 1.4h-4.2zM15 6.3h5.6v1.4H15V6.3z"/></svg>',
+    dribbble: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M19.13 5.09C15.22 9.14 10 10.44 2.25 10.94"></path><path d="M21.75 12.84c-6.62-1.41-12.14 1-16.38 6.32"></path><path d="M8.56 2.75c4.37 6 6 9.42 8 17.72"></path></svg>',
+    signal: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h2"></path><path d="M6 12h2"></path><path d="M10 12h2"></path><path d="M14 12h2"></path><path d="M18 12h2"></path></svg>',
+    podcast: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" x2="12" y1="19" y2="22"></line></svg>',
+    link: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>'
+  };
+
+  function normalizeSocials(raw) {
+    if (!raw) return [];
+    let items = [];
+
+    if (Array.isArray(raw)) {
+      items = raw;
+    } else if (typeof raw === 'object') {
+      items = Object.entries(raw).map(([key, value]) => {
+        if (typeof value === 'string') {
+          return { platform: key, name: '', url: value };
+        } else if (typeof value === 'object' && value !== null) {
+          return { platform: key, ...value };
+        }
+        return null;
+      }).filter(Boolean);
+    }
+
+    return items.map(item => {
+      let platform = (item.platform || '').trim().toLowerCase();
+      let url = (item.url || '').trim();
+      let name = (item.name || '').trim();
+      let icon = (item.icon || '').trim();
+
+      if (!platform) {
+        const check = (url + ' ' + name).toLowerCase();
+        if (check.includes('github')) platform = 'github';
+        else if (check.includes('linkedin')) platform = 'linkedin';
+        else if (check.includes('telegram') || check.includes('t.me')) platform = 'telegram';
+        else if (check.includes('@') && !check.includes('/')) platform = 'email';
+        else if (check.includes('twitter') || check.includes('x.com')) platform = 'x';
+        else if (check.includes('whatsapp') || check.includes('wa.me')) platform = 'whatsapp';
+        else if (check.includes('youtube')) platform = 'youtube';
+        else if (check.includes('facebook')) platform = 'facebook';
+        else if (check.includes('instagram')) platform = 'instagram';
+        else if (check.includes('discord')) platform = 'discord';
+        else if (check.includes('medium')) platform = 'medium';
+        else if (check.includes('gitlab')) platform = 'gitlab';
+        else if (check.includes('stackoverflow')) platform = 'stackoverflow';
+        else if (check.includes('reddit')) platform = 'reddit';
+        else if (check.includes('tiktok')) platform = 'tiktok';
+        else if (check.includes('threads')) platform = 'threads';
+        else if (check.includes('twitch')) platform = 'twitch';
+        else if (check.includes('patreon')) platform = 'patreon';
+        else if (check.includes('behance')) platform = 'behance';
+        else if (check.includes('dribbble')) platform = 'dribbble';
+        else platform = 'link';
+      }
+
+      if (platform === 'email' || platform === 'mail') {
+        if (!url.startsWith('mailto:')) {
+          url = `mailto:${url}`;
+        }
+      } else if (platform === 'telegram') {
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+          const handle = url.startsWith('@') ? url.slice(1) : url;
+          url = `https://t.me/${handle}`;
+        }
+      } else if (platform === 'whatsapp') {
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+          const cleanPhone = url.replace(/[^0-9]/g, '');
+          url = `https://wa.me/${cleanPhone}`;
+        }
+      } else if (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('mailto:') && !url.startsWith('tel:')) {
+        url = `https://${url}`;
+      }
+
+      if (!name) {
+        const defaultNames = {
+          github: 'GitHub',
+          linkedin: 'LinkedIn',
+          telegram: 'Telegram',
+          email: 'Email',
+          mail: 'Email',
+          twitter: 'Twitter',
+          x: 'X (Twitter)',
+          whatsapp: 'WhatsApp',
+          youtube: 'YouTube',
+          facebook: 'Facebook',
+          instagram: 'Instagram',
+          discord: 'Discord',
+          medium: 'Medium',
+          gitlab: 'GitLab',
+          stackoverflow: 'Stack Overflow',
+          reddit: 'Reddit',
+          tiktok: 'TikTok',
+          threads: 'Threads',
+          twitch: 'Twitch',
+          patreon: 'Patreon',
+          buymeacoffee: 'Buy Me a Coffee',
+          coffee: 'Buy Me a Coffee',
+          behance: 'Behance',
+          dribbble: 'Dribbble',
+          signal: 'Signal',
+          podcast: 'Podcast',
+          globe: 'Website',
+          website: 'Website',
+          site: 'Website',
+          link: 'Link'
+        };
+        name = defaultNames[platform] || platform.charAt(0).toUpperCase() + platform.slice(1);
+      }
+
+      return {
+        platform,
+        name,
+        url,
+        icon
+      };
+    }).filter(item => Boolean(item.url));
+  }
+
+  function getSocialIcon(item) {
+    const rawIcon = (item.icon || '').trim();
+
+    // 1. Direct inline SVG string
+    if (rawIcon.startsWith('<svg') || rawIcon.includes('</svg>')) {
+      return rawIcon;
+    }
+
+    // 2. Image or SVG file path / URL
+    const isImagePath = /\.(svg|png|webp|jpg|jpeg|gif|ico)(\?.*)?$/i.test(rawIcon) ||
+      rawIcon.startsWith('http://') ||
+      rawIcon.startsWith('https://') ||
+      rawIcon.startsWith('/') ||
+      rawIcon.startsWith('./') ||
+      rawIcon.startsWith('assets/');
+
+    if (isImagePath) {
+      return `<img src="${rawIcon}" alt="${item.name || 'icon'}" class="social-custom-img" loading="lazy">`;
+    }
+
+    // 3. Named icon in SOCIAL_ICONS
+    if (rawIcon && SOCIAL_ICONS[rawIcon.toLowerCase()]) {
+      return SOCIAL_ICONS[rawIcon.toLowerCase()];
+    }
+
+    // 4. Named icon in general ICONS (e.g. code, terminal, palette, database, star, book, etc.)
+    if (rawIcon && ICONS[rawIcon.toLowerCase()]) {
+      return ICONS[rawIcon.toLowerCase()];
+    }
+
+    // 5. CSS Icon class (e.g. FontAwesome, Bootstrap Icons, RemixIcon)
+    if (rawIcon && (rawIcon.includes('fa-') || rawIcon.includes('bi-') || rawIcon.includes('ri-') || rawIcon.includes('icon-'))) {
+      return `<i class="${rawIcon} social-custom-icon" aria-hidden="true"></i>`;
+    }
+
+    // 6. Short text or Emoji (e.g. ☕, ⚡, 🚀, YT, X)
+    if (rawIcon && Array.from(rawIcon).length <= 4) {
+      return `<span class="social-custom-text">${rawIcon}</span>`;
+    }
+
+    // 7. Auto-detect from platform name
+    const platKey = (item.platform || '').toLowerCase();
+    if (SOCIAL_ICONS[platKey]) {
+      return SOCIAL_ICONS[platKey];
+    }
+    if (ICONS[platKey]) {
+      return ICONS[platKey];
+    }
+
+    // 8. Fallback
+    return SOCIAL_ICONS.link || SOCIAL_ICONS.globe;
+  }
+
+  function renderSocialLinks(containerId, rawSocials) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const list = normalizeSocials(rawSocials);
+    if (list.length === 0) {
+      container.innerHTML = '';
+      return;
+    }
+    container.innerHTML = list.map(item => {
+      const isEmail = item.url.startsWith('mailto:');
+      const targetAttr = isEmail ? '' : 'target="_blank" rel="noopener noreferrer"';
+      return `<a href="${item.url}" ${targetAttr} class="social-btn" aria-label="${item.name}" title="${item.name}">${getSocialIcon(item)}</a>`;
+    }).join('');
+  }
+
   // --- Profile Rendering Engine ---
   function renderProfile(langCode) {
     const langConfig = appConfig.languages.find(l => l.code === langCode) || appConfig.languages[0];
@@ -1033,6 +1246,9 @@
       heroImg.setAttribute('alt', data.hero.title);
       removeSkeleton(heroImg);
     }
+
+    // Render Hero Social Links
+    renderSocialLinks('hero-socials', sharedData.socials);
 
     // 4. Skills Section (Index Page)
     const skillsTitle = document.getElementById('skills-title');
@@ -1397,20 +1613,34 @@
       contactDesc.textContent = data.contact.description;
       removeSkeleton(contactDesc);
     }
+
+    const normalizedSocials = normalizeSocials(sharedData.socials);
+    const emailItem = normalizedSocials.find(s => s.platform === 'email' || s.platform === 'mail');
+    const githubItem = normalizedSocials.find(s => s.platform === 'github');
+
     if (contactEmailBtn) {
       contactEmailBtn.innerHTML = `${ICONS.email} ${data.contact.sendEmail}`;
       removeSkeleton(contactEmailBtn);
-      if (sharedData.socials && sharedData.socials.email) {
-        contactEmailBtn.setAttribute('href', `mailto:${sharedData.socials.email}`);
+      if (emailItem) {
+        contactEmailBtn.setAttribute('href', emailItem.url);
+        contactEmailBtn.style.display = '';
+      } else {
+        contactEmailBtn.style.display = 'none';
       }
     }
     if (contactGithubBtn) {
       contactGithubBtn.innerHTML = `${ICONS.github} ${data.contact.visitGithub}`;
       removeSkeleton(contactGithubBtn);
-      if (sharedData.socials && sharedData.socials.github) {
-        contactGithubBtn.setAttribute('href', sharedData.socials.github);
+      if (githubItem) {
+        contactGithubBtn.setAttribute('href', githubItem.url);
+        contactGithubBtn.style.display = '';
+      } else {
+        contactGithubBtn.style.display = 'none';
       }
     }
+
+    // Render Contact Social Links
+    renderSocialLinks('contact-socials', sharedData.socials);
 
     // 10. Footer
     const footerAuthor = document.getElementById('footer-author');

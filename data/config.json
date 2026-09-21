@@ -3,9 +3,9 @@
   "features": {
     "skills": true,
     "projects": true,
-    "articles": true,
+    "articles": false,
     "books": true,
-    "testimonials": true,
+    "testimonials": false,
     "contact": true
   },
   "languages": [
